@@ -5,3 +5,5 @@ dist
 
 db
 .vscode
+
+/function/test.js
