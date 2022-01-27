@@ -7,8 +7,8 @@ import cheerio from 'cheerio';
 async function getschedule(year, month) {
     var data = new Object();
 
-    var id = "Q124751571"; ///
-    var pwd = "wes20060929"; ///
+    var id = ""; ///
+    var pwd = ""; ///
     var url = "";
 
     if (year && month) {
