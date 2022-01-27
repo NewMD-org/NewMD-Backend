@@ -7,8 +7,8 @@ const func = require('./function');
 async function getSchedule(className, year, week) {
     let data = new Object();
 
-    const id = "Q124751571";
-    const pwd = "wes20060929";
+    const id = process.env.UserName;
+    const pwd = process.env.UserPsd;
     let url = "";
     let hasF_sPeriodsem = true;
 
