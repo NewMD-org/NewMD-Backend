@@ -20,6 +20,10 @@ async function getSchedule(className, year, week) {
         if ((typeof (className) == "string") && (typeof (week) == "number") && (typeof (year) == "number")) {
             if (((className.length <= 4) && (week.toString().length <= 2) && year.toString().length == 4)) {
                 let classSymbol = func.cls(className);
+                if(classSymbol.err) {
+                    data.error = `ClassError: class ${className} is not found`;
+                    return data;
+                }
                 url = `?F_sPeriodsem=${year}&F_wno=${week}&qType=Class&F_sClass=${classSymbol.output}`;
             }
             else {
@@ -40,6 +44,10 @@ async function getSchedule(className, year, week) {
             week = "";
             hasF_sPeriodsem = false;
             let classSymbol = func.cls(className);
+            if(classSymbol.err) {
+                data.error = `ClassError: class ${className} is not found`;
+                return data;
+            }
             url = `?qType=Class&F_sClass=${classSymbol.output}`;
         }
         else {
