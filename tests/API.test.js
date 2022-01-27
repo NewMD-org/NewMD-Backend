@@ -10,6 +10,4 @@ async function get(url) {
     }
 }
 
-get('http://localhost:3000/');
-get('http://localhost:3000/Y313/1101/2');
-get('http://localhost:3000/Y313');
+get('https://md-apps.herokuapp.com/API/Y313/1101/2');
