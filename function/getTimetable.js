@@ -2,44 +2,57 @@ const fetch = require('node-fetch');
 const axios = require('axios');
 const iconv = require('iconv-lite');
 const cheerio = require('cheerio');
+const func = require('./function');
 
-
-async function getSchedule(year, week) {
+async function getSchedule(className, year, week) {
     let data = new Object();
 
     const id = "Q124751571";
     const pwd = "wes20060929";
     let url = "";
+    let hasF_sPeriodsem = true;
 
-    if (year && week) {
-        if ((typeof(year) == "number") && (typeof(week) == "number")) {
-            if ((year.toString().length == 4) && (week.toString().length <= 2)) {
-                url = `?F_sPeriodsem=${year}&F_wno=${week}&qType=Class&F_sClass=Y09008@Y313`;
+    console.log("className: " + className);
+    console.log("year: " + year);
+    console.log("week: " + week);
+
+    if (year && week && className) {
+        if ((typeof (className) == "string") && (typeof (week) == "number") && (typeof (year) == "number")) {
+            if (((className.length <= 4) && (week.toString().length <= 2) && year.toString().length == 4)) {
+                let classSymbol = func.cls(className);
+                url = `?F_sPeriodsem=${year}&F_wno=${week}&qType=Class&F_sClass=${classSymbol.output}`;
             }
             else {
-                data.error = "error1";
+                data.error = "ParamsError: input string length is not in order";
+                console.log(data.error);
                 return data;
-            };
+            }
         }
         else {
-            data.error = "error2";
+            data.error = "TypeError: input type is not in order";
+            console.log(data.error);
             return data;
-        };
+        }
     }
-    else if (!year || !week) {
-        if (!year && !week) {
+    else if (!className || !week || !year) {
+        if (className && !(typeof week !== 'undefined') && !(typeof year !== 'undefined')) {
             year = "";
             week = "";
+            hasF_sPeriodsem = false;
+            let classSymbol = func.cls(className);
+            url = `?qType=Class&F_sClass=${classSymbol.output}`;
         }
         else {
-            data.error = "error3";
+            data.error = "InputError";
+            console.log(data.error);
             return data;
         };
     }
     else {
         data.error = "error4";
+        console.log(data.error);
         return data;
-    };
+    }
 
     data = await fetch("http://libauto.mingdao.edu.tw/AACourses/Web/wLogin.php", {
         "headers": {
@@ -94,10 +107,11 @@ async function getSchedule(year, week) {
                     };
                 }
                 else {
+                    let mode = hasF_sPeriodsem ? 'qWTT' : 'qSTT';
                     let data = await axios.request({
                         responseType: 'arraybuffer',
                         method: "GET",
-                        url: `http://libauto.mingdao.edu.tw/AACourses/Web/qWTT.php${url}`,
+                        url: `http://libauto.mingdao.edu.tw/AACourses/Web/${mode}.php${url}`,
                         headers: {
                             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                             "accept-language": "zh-TW,zh;q=0.9",
@@ -112,7 +126,7 @@ async function getSchedule(year, week) {
                         let data;
                         if (response.status == 200) {
                             const $ = cheerio.load(response.data);
-                            let location = " > table > tbody > tr:nth-child(2) > td > span > div > div.";
+                            let location = " > table > tbody > tr > td > span > div > div.";
                             data = {
                                 day1: {
                                     1: {
@@ -340,11 +354,11 @@ async function getSchedule(year, week) {
             });
             return data;
         };
-    }).catch( _ => {
+    }).catch(_ => {
         let data = {
             error: "network error 1"
         };
-        return data ;
+        return data;
     });
     return data;
 }
@@ -357,7 +371,7 @@ async function getSchedule(year, week) {
 4 > 寒假
 */
 
-// getSchedule(1101, 2).then(data => {
+// getSchedule("Y313").then(data => {
 //     if (!data.error) {
 //         console.log(data);
 //     }
