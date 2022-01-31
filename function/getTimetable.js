@@ -348,14 +348,14 @@ async function getSchedule(className, year, week) {
                                 error: "network error 3"
                             };
                         };
-                    }).catch(error => {
+                    }).catch(_ => {
                         return {
                             error: "network error 3"
                         };
                     });
                     return data;
                 };
-            }).catch(error => {
+            }).catch(_ => {
                 return {
                     error: "network error 2"
                 };
