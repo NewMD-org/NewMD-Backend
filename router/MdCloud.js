@@ -1,5 +1,6 @@
 const express = require('express');
-const API = require('../function/login');
+const ACC = require('../function/login');
+const stdData = require('../function/getIndexpage');
 const router = express.Router();
 
 router.get('/', (_, res) => {
@@ -8,17 +9,30 @@ router.get('/', (_, res) => {
 
 router.get('/login/:id/:psd', (req, res) => {
     let params = req.params;
-    API.login(params.id, params.psd)
+    ACC.login(params.id, params.psd)
         .then(data => {
             if (!data.error) {
                 res.status(200).json({
-                     status: data.status, 
-                     cookie: data.cookie 
+                    status: data.status,
+                    cookie: data.cookie
                 });
-            }else {
+            } else {
                 res.status(404).json(data);
             }
         })
+});
+
+router.get('/stdData/:cookie', (req, res) => {
+    const params = req.params;
+    stdData.getIndex(params.cookie)
+        .then(data => {
+            if (!data.error) {
+                res.status(200).json(data);
+            }
+            else {
+                res.status(404).json(data);
+            };
+        });
 });
 
 module.exports = router;
