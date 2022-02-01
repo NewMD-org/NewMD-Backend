@@ -1,13 +1,13 @@
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 async function get(url) {
     try {
-        let data = await fetch(url);
-        data = await data.json();
+        let res = await axios.get(url);
+        data = await res.data;
         console.log(data);
     }catch(err) {
         console.error(err);
     }
 }
 
-get('https://md-apps.herokuapp.com/API/Y313/1101/2');
+get('http://localhost:3000/mdcloud/login/B123793073/8888888888');
