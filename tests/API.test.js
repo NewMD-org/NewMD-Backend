@@ -11,14 +11,9 @@ async function get(url) {
     }
 }
 
-get('http://localhost:3000/mdcloud/login/B123793073/8888888888')
-    .then(data1 => {
-        get(`http://localhost:3000/mdcloud/stdData/${data1.cookie}`)
-            .then(data => {
-                console.log(data);
-            }).catch(err => {
-                console.log('wrong in second place');
-            });
+get('http://localhost:3000/mdcloud/fastTable/b123793073/8888888888')
+    .then(data => {
+        console.log(data);
     }).catch(err => {
-        console.log('wrong in first function');
+        console.log('error:::', err);
     })

@@ -1,6 +1,7 @@
 const express = require('express');
 const ACC = require('../function/login');
 const stdData = require('../function/getIndexpage');
+const fastTable = require('../function/fastTable');
 const router = express.Router();
 
 router.get('/', (_, res) => {
@@ -33,6 +34,16 @@ router.get('/stdData/:cookie', (req, res) => {
                 res.status(404).json(data);
             };
         });
+});
+
+router.get('/fastTable/:id/:pwd', async (req, res) => {
+    const params = req.params;
+    fastTable.fastTable(params.id, params.pwd)
+        .then(data => {
+            res.status(200).json(data);
+        }).catch(err => {
+            console.log('something went wrong', err);
+        })
 });
 
 module.exports = router;

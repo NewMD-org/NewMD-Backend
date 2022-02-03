@@ -2,65 +2,9 @@ const fetch = require('node-fetch');
 const axios = require('axios');
 const iconv = require('iconv-lite');
 const cheerio = require('cheerio');
-const func = require('./function');
 
-async function getSchedule(className, year, week) {
+async function fastTable(id, pwd) {
     let data = new Object();
-
-    const id = 'b123793073';
-    const pwd = '8888888888';
-    let url = "";
-    let hasF_sPeriodsem = true;
-
-    console.log("className: " + className);
-    console.log("year: " + year);
-    console.log("week: " + week);
-
-    if (year && week && className) {
-        if ((typeof (className) == "string") && (typeof (week) == "number") && (typeof (year) == "number")) {
-            if (((className.length <= 4) && (week.toString().length <= 2) && year.toString().length == 4)) {
-                let classSymbol = func.cls(className);
-                if(classSymbol.err) {
-                    data.error = `ClassError: class ${className} is not found`;
-                    return data;
-                }
-                url = `?F_sPeriodsem=${year}&F_wno=${week}&qType=Class&F_sClass=${classSymbol.output}`;
-            }
-            else {
-                data.error = "ParamsError: input string length is not in order";
-                console.log(data.error);
-                return data;
-            }
-        }
-        else {
-            data.error = "TypeError: input type is not in order";
-            console.log(data.error);
-            return data;
-        }
-    }
-    else if (!className || !week || !year) {
-        if (className && !(typeof week !== 'undefined') && !(typeof year !== 'undefined')) {
-            year = "";
-            week = "";
-            hasF_sPeriodsem = false;
-            let classSymbol = func.cls(className);
-            if(classSymbol.err) {
-                data.error = `ClassError: class ${className} is not found`;
-                return data;
-            }
-            url = `?qType=Class&F_sClass=${classSymbol.output}`;
-        }
-        else {
-            data.error = "InputError";
-            console.log(data.error);
-            return data;
-        };
-    }
-    else {
-        data.error = "error4";
-        console.log(data.error);
-        return data;
-    }
 
     data = await fetch("http://libauto.mingdao.edu.tw/AACourses/Web/wLogin.php", {
         "headers": {
@@ -115,11 +59,10 @@ async function getSchedule(className, year, week) {
                     };
                 }
                 else {
-                    let mode = hasF_sPeriodsem ? 'qWTT' : 'qSTT';
                     let data = await axios.request({
                         responseType: 'arraybuffer',
                         method: "GET",
-                        url: `http://libauto.mingdao.edu.tw/AACourses/Web/${mode}.php${url}`,
+                        url: `http://libauto.mingdao.edu.tw/AACourses/Web/qWTT.php`,
                         headers: {
                             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                             "accept-language": "zh-TW,zh;q=0.9",
@@ -371,21 +314,4 @@ async function getSchedule(className, year, week) {
     return data;
 }
 
-
-/*
-1 > 上學期
-2 > 下學期
-3 > 暑假
-4 > 寒假
-*/
-
-// getSchedule("Y313").then(data => {
-//     if (!data.error) {
-//         console.log(data);
-//     }
-//     else {
-//         console.error(data.error);
-//     };
-// });
-
-module.exports.getSchedule = getSchedule;
+module.exports.fastTable = fastTable;
