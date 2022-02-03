@@ -49,6 +49,14 @@ async function getSchedule(className, year, week) {
                 return data;
             }
             url = `?qType=Class&F_sClass=${classSymbol.output}`;
+        }else if(className && !(typeof week !== 'undefined') && year) {
+            hasF_sPeriodsem = false;
+            let classSymbol = func.cls(className);
+            if(classSymbol.err) {
+                data.error = `ClassError: class ${className} is not found`;
+                return data;
+            }
+            url = `?F_sPeriodsem=${year}&qType=Class&F_sClass=${classSymbol.output}`;
         }
         else {
             data.error = "InputError";
@@ -379,7 +387,7 @@ async function getSchedule(className, year, week) {
 4 > 寒假
 */
 
-// getSchedule("Y313").then(data => {
+// getSchedule("Y313", 1101, 1).then(data => {
 //     if (!data.error) {
 //         console.log(data);
 //     }
