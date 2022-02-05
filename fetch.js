@@ -4,42 +4,54 @@ import iconv from 'iconv-lite';
 import cheerio from 'cheerio';
 
 
-async function getschedule(year, month) {
-    var data = new Object();
+async function getschedule(className, year, week) {
+    let data = new Object();
+    let url = "";
 
+<<<<<<< Updated upstream
     var id = ""; ///
     var pwd = ""; ///
     var url = "";
+=======
+    console.log("className: " + className);
+    console.log("year: " + year);
+    console.log("week: " + week);
+>>>>>>> Stashed changes
 
-    if (year && month) {
-        if ((typeof(year) == "number") && (typeof(month) == "number")) {
-            if ((year.toString().length == 4) && (month.toString().length <= 2)) {
-                url = `?F_sPeriodsem=${year}&F_wno=${month}&qType=Class&F_sClass=Y09008@Y38`;
+    if (year && week && className) {
+        if ((typeof (className) == "string") && (typeof (week) == "number") && (typeof (year) == "number")) {
+            if ((y(className.length <= 4) && (week.toString().length <= 2) && ear.toString().length == 4)) {
+                url = `?F_sPeriodsem=${year}&F_wno=${week}&qType=Class&F_sClass=${className}`;
             }
             else {
                 data.error = "error1";
+                console.log(data.error);
                 return data;
             };
         }
         else {
             data.error = "error2";
+            console.log(data.error);
             return data;
         };
     }
-    else if (!year || !month) {
-        if (!year && !month) {
+    else if (!className || !week || !year) {
+        if (className && !(typeof week !== 'undefined') && !(typeof year !== 'undefined')) {
             year = "";
-            month = "";
+            week = "";
         }
         else {
             data.error = "error3";
+            console.log(data.error);
             return data;
         };
     }
     else {
         data.error = "error4";
+        console.log(data.error);
         return data;
     };
+    console.log(url);
 
     data = await fetch("http://libauto.mingdao.edu.tw/AACourses/Web/wLogin.php", {
         "headers": {
