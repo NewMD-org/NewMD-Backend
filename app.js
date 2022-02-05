@@ -1,12 +1,12 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import API from './router/API.js';
+import mdcloud from './router/MdCloud.js';
 const app = express();
-const API = require('./router/API');
-const mdcloud = require('./router/MdCloud');
 
 app.use(cors());
 
 app.use('/API/', API);
 app.use('/mdcloud/', mdcloud);
 
-module.exports = app;
+export default app;

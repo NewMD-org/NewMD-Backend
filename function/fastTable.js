@@ -1,7 +1,7 @@
-const fetch = require('node-fetch');
-const axios = require('axios');
-const iconv = require('iconv-lite');
-const cheerio = require('cheerio');
+import fetch from 'node-fetch';
+import axios from 'axios';
+import iconv from 'iconv-lite';
+import cheerio from 'cheerio';
 
 async function fastTable(id, pwd) {
     let data = new Object();
@@ -314,4 +314,4 @@ async function fastTable(id, pwd) {
     return data;
 }
 
-module.exports.fastTable = fastTable;
+export default fastTable;

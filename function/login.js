@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 async function login(id, pwd) {
     let data = new Object();
@@ -60,7 +60,7 @@ async function login(id, pwd) {
     return data;
 }
 
-module.exports.login = login;
+export default login;
 
 /***** Test Code *******/
 /*** 

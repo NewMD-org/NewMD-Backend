@@ -1,5 +1,4 @@
-const axios = require('axios');
-const { data } = require('cheerio/lib/api/attributes');
+import axios from 'axios';
 
 async function get(url) {
     try {
@@ -11,7 +10,7 @@ async function get(url) {
     }
 }
 
-get('http://localhost:3000/mdcloud/fastTable/b123793073/8888888888')
+get('http://localhost:3000/API/Y313/1104')
     .then(data => {
         console.log(data);
     }).catch(err => {

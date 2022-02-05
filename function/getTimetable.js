@@ -1,14 +1,16 @@
-const fetch = require('node-fetch');
-const axios = require('axios');
-const iconv = require('iconv-lite');
-const cheerio = require('cheerio');
-const func = require('./function');
+import fetch from 'node-fetch';
+import axios from 'axios';
+import iconv from 'iconv-lite';
+import cheerio from 'cheerio';
+import cls from './function.js';
 
 async function getSchedule(className, year, week) {
     let data = new Object();
 
-    const id = process.env.UserName;
-    const pwd = process.env.UserPsd;
+    // const pwd = process.env.UserPsd;
+    // const id = process.env.UserName;
+    const id = 'b123793073';
+    const pwd = '8888888888';
     let url = "";
     let hasF_sPeriodsem = true;
 
@@ -19,8 +21,8 @@ async function getSchedule(className, year, week) {
     if (year && week && className) {
         if ((typeof (className) == "string") && (typeof (week) == "number") && (typeof (year) == "number")) {
             if (((className.length <= 4) && (week.toString().length <= 2) && year.toString().length == 4)) {
-                let classSymbol = func.cls(className);
-                if(classSymbol.err) {
+                let classSymbol = cls(className);
+                if (classSymbol.err) {
                     data.error = `ClassError: class ${className} is not found`;
                     return data;
                 }
@@ -43,16 +45,16 @@ async function getSchedule(className, year, week) {
             year = "";
             week = "";
             hasF_sPeriodsem = false;
-            let classSymbol = func.cls(className);
-            if(classSymbol.err) {
+            let classSymbol = cls(className);
+            if (classSymbol.err) {
                 data.error = `ClassError: class ${className} is not found`;
                 return data;
             }
             url = `?qType=Class&F_sClass=${classSymbol.output}`;
-        }else if(className && !(typeof week !== 'undefined') && year) {
+        } else if (className && !(typeof week !== 'undefined') && year) {
             hasF_sPeriodsem = false;
-            let classSymbol = func.cls(className);
-            if(classSymbol.err) {
+            let classSymbol = cls(className);
+            if (classSymbol.err) {
                 data.error = `ClassError: class ${className} is not found`;
                 return data;
             }
@@ -396,4 +398,4 @@ async function getSchedule(className, year, week) {
 //     };
 // });
 
-module.exports.getSchedule = getSchedule;
+export default getSchedule;

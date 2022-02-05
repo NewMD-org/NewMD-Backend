@@ -1,6 +1,6 @@
-const axios = require('axios');
-const iconv = require('iconv-lite');
-const cheerio = require('cheerio');
+import axios from 'axios';
+import iconv from 'iconv-lite';
+import cheerio from 'cheerio';
 
 async function getIndex(cookie) {
     let data = new Object();
@@ -112,4 +112,4 @@ async function getIndex(cookie) {
     return data;
 }
 
-module.exports.getIndex = getIndex;
+export default getIndex;

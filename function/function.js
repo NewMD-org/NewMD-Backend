@@ -39,4 +39,4 @@ function cls(className) {
     }
 }
 
-module.exports.cls = cls
+export default cls;
