@@ -7,10 +7,8 @@ import cls from './function.js';
 async function getSchedule(className, year, week) {
     let data = new Object();
 
-    // const pwd = process.env.UserPsd;
-    // const id = process.env.UserName;
-    const id = 'b123793073';
-    const pwd = '8888888888';
+    const pwd = process.env.UserPsd;
+    const id = process.env.UserName;
     let url = "";
     let hasF_sPeriodsem = true;
 
