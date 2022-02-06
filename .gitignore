@@ -6,7 +6,5 @@ dist
 db
 .vscode
 
-/function/test.js
-
 fetch.js
 test.js

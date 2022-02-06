@@ -146,206 +146,206 @@ async function getSchedule(className, year, week) {
                             data = {
                                 day1: {
                                     1: {
-                                        classname: `${$(`#F_1_1${location}subj`).html()}`,
-                                        teacher: `${$(`#F_1_1${location}tea`).html()}`
+                                        classname: $(`#F_1_1${location}subj`).html(),
+                                        teacher: $(`#F_1_1${location}tea`).html()
                                     },
                                     2: {
-                                        classname: `${$(`#F_1_2${location}subj`).html()}`,
-                                        teacher: `${$(`#F_1_2${location}tea`).html()}`
+                                        classname: $(`#F_1_2${location}subj`).html(),
+                                        teacher: $(`#F_1_2${location}tea`).html()
                                     },
                                     3: {
-                                        classname: `${$(`#F_1_3${location}subj`).html()}`,
-                                        teacher: `${$(`#F_1_3${location}tea`).html()}`
+                                        classname: $(`#F_1_3${location}subj`).html(),
+                                        teacher: $(`#F_1_3${location}tea`).html()
                                     },
                                     4: {
-                                        classname: `${$(`#F_1_4${location}subj`).html()}`,
-                                        teacher: `${$(`#F_1_4${location}tea`).html()}`
+                                        classname: $(`#F_1_4${location}subj`).html(),
+                                        teacher: $(`#F_1_4${location}tea`).html()
                                     },
                                     5: {
-                                        classname: `${$(`#F_1_5${location}subj`).html()}`,
-                                        teacher: `${$(`#F_1_5${location}tea`).html()}`
+                                        classname: $(`#F_1_5${location}subj`).html(),
+                                        teacher: $(`#F_1_5${location}tea`).html()
                                     },
                                     6: {
-                                        classname: `${$(`#F_1_6${location}subj`).html()}`,
-                                        teacher: `${$(`#F_1_6${location}tea`).html()}`
+                                        classname: $(`#F_1_6${location}subj`).html(),
+                                        teacher: $(`#F_1_6${location}tea`).html()
                                     },
                                     7: {
-                                        classname: `${$(`#F_1_7${location}subj`).html()}`,
-                                        teacher: `${$(`#F_1_7${location}tea`).html()}`
+                                        classname: $(`#F_1_7${location}subj`).html(),
+                                        teacher: $(`#F_1_7${location}tea`).html()
                                     },
                                     8: {
-                                        classname: `${$(`#F_1_8${location}subj`).html()}`,
-                                        teacher: `${$(`#F_1_8${location}tea`).html()}`
+                                        classname: $(`#F_1_8${location}subj`).html(),
+                                        teacher: $(`#F_1_8${location}tea`).html()
                                     }
                                 },
                                 day2: {
                                     1: {
-                                        classname: `${$(`#F_2_1${location}subj`).html()}`,
-                                        teacher: `${$(`#F_2_1${location}tea`).html()}`
+                                        classname: $(`#F_2_1${location}subj`).html(),
+                                        teacher: $(`#F_2_1${location}tea`).html()
                                     },
                                     2: {
-                                        classname: `${$(`#F_2_2${location}subj`).html()}`,
-                                        teacher: `${$(`#F_2_2${location}tea`).html()}`
+                                        classname: $(`#F_2_2${location}subj`).html(),
+                                        teacher: $(`#F_2_2${location}tea`).html()
                                     },
                                     3: {
-                                        classname: `${$(`#F_2_3${location}subj`).html()}`,
-                                        teacher: `${$(`#F_2_3${location}tea`).html()}`
+                                        classname: $(`#F_2_3${location}subj`).html(),
+                                        teacher: $(`#F_2_3${location}tea`).html()
                                     },
                                     4: {
-                                        classname: `${$(`#F_2_4${location}subj`).html()}`,
-                                        teacher: `${$(`#F_2_4${location}tea`).html()}`
+                                        classname: $(`#F_2_4${location}subj`).html(),
+                                        teacher: $(`#F_2_4${location}tea`).html()
                                     },
                                     5: {
-                                        classname: `${$(`#F_2_5${location}subj`).html()}`,
-                                        teacher: `${$(`#F_2_5${location}tea`).html()}`
+                                        classname: $(`#F_2_5${location}subj`).html(),
+                                        teacher: $(`#F_2_5${location}tea`).html()
                                     },
                                     6: {
-                                        classname: `${$(`#F_2_6${location}subj`).html()}`,
-                                        teacher: `${$(`#F_2_6${location}tea`).html()}`
+                                        classname: $(`#F_2_6${location}subj`).html(),
+                                        teacher: $(`#F_2_6${location}tea`).html()
                                     },
                                     7: {
-                                        classname: `${$(`#F_2_7${location}subj`).html()}`,
-                                        teacher: `${$(`#F_2_7${location}tea`).html()}`
+                                        classname: $(`#F_2_7${location}subj`).html(),
+                                        teacher: $(`#F_2_7${location}tea`).html()
                                     },
                                     8: {
-                                        classname: `${$(`#F_2_8${location}subj`).html()}`,
-                                        teacher: `${$(`#F_2_8${location}tea`).html()}`
+                                        classname: $(`#F_2_8${location}subj`).html(),
+                                        teacher: $(`#F_2_8${location}tea`).html()
                                     }
                                 },
                                 day3: {
                                     1: {
-                                        classname: `${$(`#F_3_1${location}subj`).html()}`,
-                                        teacher: `${$(`#F_3_1${location}tea`).html()}`
+                                        classname: $(`#F_3_1${location}subj`).html(),
+                                        teacher: $(`#F_3_1${location}tea`).html()
                                     },
                                     2: {
-                                        classname: `${$(`#F_3_2${location}subj`).html()}`,
-                                        teacher: `${$(`#F_3_2${location}tea`).html()}`
+                                        classname: $(`#F_3_2${location}subj`).html(),
+                                        teacher: $(`#F_3_2${location}tea`).html()
                                     },
                                     3: {
-                                        classname: `${$(`#F_3_3${location}subj`).html()}`,
-                                        teacher: `${$(`#F_3_3${location}tea`).html()}`
+                                        classname: $(`#F_3_3${location}subj`).html(),
+                                        teacher: $(`#F_3_3${location}tea`).html()
                                     },
                                     4: {
-                                        classname: `${$(`#F_3_4${location}subj`).html()}`,
-                                        teacher: `${$(`#F_3_4${location}tea`).html()}`
+                                        classname: $(`#F_3_4${location}subj`).html(),
+                                        teacher: $(`#F_3_4${location}tea`).html()
                                     },
                                     5: {
-                                        classname: `${$(`#F_3_5${location}subj`).html()}`,
-                                        teacher: `${$(`#F_3_5${location}tea`).html()}`
+                                        classname: $(`#F_3_5${location}subj`).html(),
+                                        teacher: $(`#F_3_5${location}tea`).html()
                                     },
                                     6: {
-                                        classname: `${$(`#F_3_6${location}subj`).html()}`,
-                                        teacher: `${$(`#F_3_6${location}tea`).html()}`
+                                        classname: $(`#F_3_6${location}subj`).html(),
+                                        teacher: $(`#F_3_6${location}tea`).html()
                                     },
                                     7: {
-                                        classname: `${$(`#F_3_7${location}subj`).html()}`,
-                                        teacher: `${$(`#F_3_7${location}tea`).html()}`
+                                        classname: $(`#F_3_7${location}subj`).html(),
+                                        teacher: $(`#F_3_7${location}tea`).html()
                                     },
                                     8: {
-                                        classname: `${$(`#F_3_8${location}subj`).html()}`,
-                                        teacher: `${$(`#F_3_8${location}tea`).html()}`
+                                        classname: $(`#F_3_8${location}subj`).html(),
+                                        teacher: $(`#F_3_8${location}tea`).html()
                                     }
                                 },
                                 day4: {
                                     1: {
-                                        classname: `${$(`#F_4_1${location}subj`).html()}`,
-                                        teacher: `${$(`#F_4_1${location}tea`).html()}`
+                                        classname: $(`#F_4_1${location}subj`).html(),
+                                        teacher: $(`#F_4_1${location}tea`).html()
                                     },
                                     2: {
-                                        classname: `${$(`#F_4_2${location}subj`).html()}`,
-                                        teacher: `${$(`#F_4_2${location}tea`).html()}`
+                                        classname: $(`#F_4_2${location}subj`).html(),
+                                        teacher: $(`#F_4_2${location}tea`).html()
                                     },
                                     3: {
-                                        classname: `${$(`#F_4_3${location}subj`).html()}`,
-                                        teacher: `${$(`#F_4_3${location}tea`).html()}`
+                                        classname: $(`#F_4_3${location}subj`).html(),
+                                        teacher: $(`#F_4_3${location}tea`).html()
                                     },
                                     4: {
-                                        classname: `${$(`#F_4_4${location}subj`).html()}`,
-                                        teacher: `${$(`#F_4_4${location}tea`).html()}`
+                                        classname: $(`#F_4_4${location}subj`).html(),
+                                        teacher: $(`#F_4_4${location}tea`).html()
                                     },
                                     5: {
-                                        classname: `${$(`#F_4_5${location}subj`).html()}`,
-                                        teacher: `${$(`#F_4_5${location}tea`).html()}`
+                                        classname: $(`#F_4_5${location}subj`).html(),
+                                        teacher: $(`#F_4_5${location}tea`).html()
                                     },
                                     6: {
-                                        classname: `${$(`#F_4_6${location}subj`).html()}`,
-                                        teacher: `${$(`#F_4_6${location}tea`).html()}`
+                                        classname: $(`#F_4_6${location}subj`).html(),
+                                        teacher: $(`#F_4_6${location}tea`).html()
                                     },
                                     7: {
-                                        classname: `${$(`#F_4_7${location}subj`).html()}`,
-                                        teacher: `${$(`#F_4_7${location}tea`).html()}`
+                                        classname: $(`#F_4_7${location}subj`).html(),
+                                        teacher: $(`#F_4_7${location}tea`).html()
                                     },
                                     8: {
-                                        classname: `${$(`#F_4_8${location}subj`).html()}`,
-                                        teacher: `${$(`#F_4_8${location}tea`).html()}`
+                                        classname: $(`#F_4_8${location}subj`).html(),
+                                        teacher: $(`#F_4_8${location}tea`).html()
                                     }
                                 },
                                 day5: {
                                     1: {
-                                        classname: `${$(`#F_5_1${location}subj`).html()}`,
-                                        teacher: `${$(`#F_5_1${location}tea`).html()}`
+                                        classname: $(`#F_5_1${location}subj`).html(),
+                                        teacher: $(`#F_5_1${location}tea`).html()
                                     },
                                     2: {
-                                        classname: `${$(`#F_5_2${location}subj`).html()}`,
-                                        teacher: `${$(`#F_5_2${location}tea`).html()}`
+                                        classname: $(`#F_5_2${location}subj`).html(),
+                                        teacher: $(`#F_5_2${location}tea`).html()
                                     },
                                     3: {
-                                        classname: `${$(`#F_5_3${location}subj`).html()}`,
-                                        teacher: `${$(`#F_5_3${location}tea`).html()}`
+                                        classname: $(`#F_5_3${location}subj`).html(),
+                                        teacher: $(`#F_5_3${location}tea`).html()
                                     },
                                     4: {
-                                        classname: `${$(`#F_5_4${location}subj`).html()}`,
-                                        teacher: `${$(`#F_5_4${location}tea`).html()}`
+                                        classname: $(`#F_5_4${location}subj`).html(),
+                                        teacher: $(`#F_5_4${location}tea`).html()
                                     },
                                     5: {
-                                        classname: `${$(`#F_5_5${location}subj`).html()}`,
-                                        teacher: `${$(`#F_5_5${location}tea`).html()}`
+                                        classname: $(`#F_5_5${location}subj`).html(),
+                                        teacher: $(`#F_5_5${location}tea`).html()
                                     },
                                     6: {
-                                        classname: `${$(`#F_5_6${location}subj`).html()}`,
-                                        teacher: `${$(`#F_5_6${location}tea`).html()}`
+                                        classname: $(`#F_5_6${location}subj`).html(),
+                                        teacher: $(`#F_5_6${location}tea`).html()
                                     },
                                     7: {
-                                        classname: `${$(`#F_5_7${location}subj`).html()}`,
-                                        teacher: `${$(`#F_5_7${location}tea`).html()}`
+                                        classname: $(`#F_5_7${location}subj`).html(),
+                                        teacher: $(`#F_5_7${location}tea`).html()
                                     },
                                     8: {
-                                        classname: `${$(`#F_5_8${location}subj`).html()}`,
-                                        teacher: `${$(`#F_5_8${location}tea`).html()}`
+                                        classname: $(`#F_5_8${location}subj`).html(),
+                                        teacher: $(`#F_5_8${location}tea`).html()
                                     }
                                 },
                                 day6: {
                                     1: {
-                                        classname: `${$(`#F_6_1${location}subj`).html()}`,
-                                        teacher: `${$(`#F_6_1${location}tea`).html()}`
+                                        classname: $(`#F_6_1${location}subj`).html(),
+                                        teacher: $(`#F_6_1${location}tea`).html()
                                     },
                                     2: {
-                                        classname: `${$(`#F_6_2${location}subj`).html()}`,
-                                        teacher: `${$(`#F_6_2${location}tea`).html()}`
+                                        classname: $(`#F_6_2${location}subj`).html(),
+                                        teacher: $(`#F_6_2${location}tea`).html()
                                     },
                                     3: {
-                                        classname: `${$(`#F_6_3${location}subj`).html()}`,
-                                        teacher: `${$(`#F_6_3${location}tea`).html()}`
+                                        classname: $(`#F_6_3${location}subj`).html(),
+                                        teacher: $(`#F_6_3${location}tea`).html()
                                     },
                                     4: {
-                                        classname: `${$(`#F_6_4${location}subj`).html()}`,
-                                        teacher: `${$(`#F_6_4${location}tea`).html()}`
+                                        classname: $(`#F_6_4${location}subj`).html(),
+                                        teacher: $(`#F_6_4${location}tea`).html()
                                     },
                                     5: {
-                                        classname: `${$(`#F_6_5${location}subj`).html()}`,
-                                        teacher: `${$(`#F_6_5${location}tea`).html()}`
+                                        classname: $(`#F_6_5${location}subj`).html(),
+                                        teacher: $(`#F_6_5${location}tea`).html()
                                     },
                                     6: {
-                                        classname: `${$(`#F_6_6${location}subj`).html()}`,
-                                        teacher: `${$(`#F_6_6${location}tea`).html()}`
+                                        classname: $(`#F_6_6${location}subj`).html(),
+                                        teacher: $(`#F_6_6${location}tea`).html()
                                     },
                                     7: {
-                                        classname: `${$(`#F_6_7${location}subj`).html()}`,
-                                        teacher: `${$(`#F_6_7${location}tea`).html()}`
+                                        classname: $(`#F_6_7${location}subj`).html(),
+                                        teacher: $(`#F_6_7${location}tea`).html()
                                     },
                                     8: {
-                                        classname: `${$(`#F_6_8${location}subj`).html()}`,
-                                        teacher: `${$(`#F_6_8${location}tea`).html()}`
+                                        classname: $(`#F_6_8${location}subj`).html(),
+                                        teacher: $(`#F_6_8${location}tea`).html()
                                     }
                                 },
                             };
