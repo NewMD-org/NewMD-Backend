@@ -10,7 +10,7 @@ async function get(url) {
     }
 }
 
-get('http://localhost:3000/API/Y313/1104')
+get('http://localhost:3000/API/Y313/1101/2')
     .then(data => {
         console.log(data);
     }).catch(err => {

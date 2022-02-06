@@ -1,4 +1,4 @@
-import getSchedule from '../function/getTimetable.js';
+import getSchedule from '../function/memoryTable.js';
 
 export const onlyClassName = (req, res) => {
     let result;

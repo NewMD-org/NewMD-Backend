@@ -409,7 +409,7 @@ class timetable {
  * @param { number } year
  * @param { number } week
  */
-export async function getSchedule(className, year, week) {
+async function getSchedule(className, year, week) {
     let response = new timetable(className, year, week);
     const check = response.checkCache();
     if (check.status == 1) {
@@ -432,10 +432,11 @@ export async function getSchedule(className, year, week) {
 //     }).catch(err => {
 //         console.log('err:\n', err);
 //     });
-getSchedule('X21', 1101, 8)
-    .then(data => {
-        console.log(data);
-    }).catch(err => {
-        console.log('err:\n', err);
-    });
+// getSchedule('X21', 1101, 8)
+//     .then(data => {
+//         console.log(data);
+//     }).catch(err => {
+//         console.log('err:\n', err);
+//     });
 /*--------------Test--------------*/
+export default getSchedule;
