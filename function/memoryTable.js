@@ -1,4 +1,4 @@
-import 'dotenv/config'
+// import 'dotenv/config'
 import { readFileSync, writeFileSync } from 'fs';
 import fetch from 'node-fetch';
 import axios from 'axios';
