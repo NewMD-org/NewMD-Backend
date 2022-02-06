@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { readFileSync, writeFileSync } from 'fs';
 import fetch from 'node-fetch';
 import axios from 'axios';
@@ -124,8 +125,8 @@ class timetable {
     }
 
     async getTable() {
-        const id = 'b123793073';
-        const password = '8888888888';
+        const id = process.env.UserId;
+        const password = process.env.UserPsd;
         this.urlProcess();
         if (this.res.error) {
             return this.res.error;
@@ -419,20 +420,19 @@ export async function getSchedule(className, year, week) {
 }
 
 /*--------------Test--------------*/
-
-getSchedule('Y312', 1104)
-    .then(data => {
-        console.log(data);
-    }).catch(err => {
-        console.log('err:\n', err);
-    });
-getSchedule('Y38', 1102)
-    .then(data => {
-        console.log(data);
-    }).catch(err => {
-        console.log('err:\n', err);
-    });
-getSchedule('X23', 1101, 8)
+// getSchedule('Y312', 1104)
+//     .then(data => {
+//         console.log(data);
+//     }).catch(err => {
+//         console.log('err:\n', err);
+//     });
+// getSchedule('Y38', 1102)
+//     .then(data => {
+//         console.log(data);
+//     }).catch(err => {
+//         console.log('err:\n', err);
+//     });
+getSchedule('X21', 1101, 8)
     .then(data => {
         console.log(data);
     }).catch(err => {
