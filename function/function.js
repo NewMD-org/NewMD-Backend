@@ -1,4 +1,4 @@
-function cls(className) {
+export const cls = (className) => {
     let split = className.split('');
     let input = className;
     if(split.length <3) {
@@ -38,5 +38,3 @@ function cls(className) {
         output
     }
 }
-
-export default cls;

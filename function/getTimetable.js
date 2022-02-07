@@ -1,14 +1,15 @@
+// import 'dotenv/config'
 import fetch from 'node-fetch';
 import axios from 'axios';
 import iconv from 'iconv-lite';
 import cheerio from 'cheerio';
-import cls from './function.js';
+import { cls } from './function.js';
 
 async function getSchedule(className, year, week) {
     let data = new Object();
 
     const pwd = process.env.UserPsd;
-    const id = process.env.UserName;
+    const id = process.env.UserId;
     let url = "";
     let hasF_sPeriodsem = true;
 
@@ -396,4 +397,4 @@ async function getSchedule(className, year, week) {
 //     };
 // });
 
-export default getSchedule;
+// export default getSchedule;

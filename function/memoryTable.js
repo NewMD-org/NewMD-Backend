@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 import axios from 'axios';
 import iconv from 'iconv-lite';
 import cheerio from 'cheerio';
-import cls from './function.js';
+import { cls } from './function.js';
 
 class timetable {
     /**
