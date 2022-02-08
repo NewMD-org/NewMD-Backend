@@ -1,5 +1,4 @@
-// import 'dotenv/config'
-import { readFileSync, writeFileSync } from 'fs';
+import 'dotenv/config'
 import fetch from 'node-fetch';
 import axios from 'axios';
 import iconv from 'iconv-lite';
@@ -71,52 +70,6 @@ class timetable {
             };
         } else {
             this.res = { error: 'didn\'t input params' };
-        }
-    }
-
-    checkCache() {
-        const res = readFileSync('./data/data.json');
-        // @ts-ignore
-        let data = JSON.parse(res);
-        let has_log = false;
-        data.forEach(index => {
-            if (index[0] == this.detail) {
-                index[1]++;
-                this.res = index[2];
-                has_log = true;
-            }
-        });
-        if (has_log) {
-            writeFileSync('./data/data.json', JSON.stringify(data));
-            return {
-                status: 1,
-                data: this.res
-            }
-        } else {
-            return {
-                status: 0
-            }
-        }
-    }
-
-    outCacheUp(object) {
-        const res = readFileSync('./data/data.json');
-        const data = JSON.parse(res);
-        if (data.length == 10) {
-            let min = data[0][1], minIndex = 0;
-            for (let i = 1; i < 10; i++) {
-                let tmp = data[i][1];
-                if (tmp < min) {
-                    min = tmp;
-                    minIndex = i;
-                };
-            }
-            data.splice(minIndex, 1);
-            data.push(object);
-            writeFileSync('./data/data.json', JSON.stringify(data));
-        } else {
-            data.push(object);
-            writeFileSync('./data/data.json', JSON.stringify(data));
         }
     }
 
@@ -390,12 +343,6 @@ class timetable {
                     }
                 },
             };
-            let writeData = [
-                this.detail,
-                1,
-                data
-            ];
-            this.outCacheUp(writeData);
             this.res = data;
         } catch (err) {
             console.log('error:\n', err);
@@ -411,10 +358,6 @@ class timetable {
  */
 async function getSchedule(className, year, week) {
     let response = new timetable(className, year, week);
-    const check = response.checkCache();
-    if (check.status == 1) {
-        return check.data;
-    }
     await response.getTable();
     return response.GET_RES;
 }
@@ -426,7 +369,7 @@ async function getSchedule(className, year, week) {
 //     }).catch(err => {
 //         console.log('err:\n', err);
 //     });
-// getSchedule('Y38', 1102)
+// getSchedule('Y38')
 //     .then(data => {
 //         console.log(data);
 //     }).catch(err => {

@@ -1,57 +1,32 @@
 import getSchedule from '../function/memoryTable.js';
+import { CGet } from '../lib/LRUCache.js';
 
-export const onlyClassName = (req, res) => {
-    let result;
+export const onlyClassName = async (req, res) => {
     const params = req.params;
-    getSchedule(params.className)
-        .then(data => {
-            if(!data.error) {
-                console.log('success');
-                result = data;
-                res.status(200).json(result);
-            } else {
-                result = {
-                    "error": data.error
-                }
-                res.status(200).json(result);
-            }
-        })
+    const key = params.className;
+    await CGet(key, () => {
+        return getSchedule(params.className);
+    }).then(data => {
+        res.status(200).json(data);
+    });
 };
 
-export const classNameWithYear = (req, res) => {
-    let result = {};
+export const classNameWithYear = async (req, res) => {
     const params = req.params;
-    getSchedule(params.className, Number(params.year))
-        .then(data => {
-            if (!data.error) {
-                console.log('success');
-                result = data;
-                res.status(200).json(result);
-            }
-            else {
-                result = {
-                    "error": data.error
-                }
-                res.status(200).json(result);
-            };
-        });
+    const key = params.className;
+    await CGet(key, () => {
+        return getSchedule(params.className, params.year);
+    }).then(data => {
+        res.status(200).json(data);
+    });
 };
 
-export const allParams =  (req, res) => {
-    let result = {};
+export const allParams = async (req, res) => {
     const params = req.params;
-    getSchedule(params.className, Number(params.year), Number(params.week))
-        .then(data => {
-            if (!data.error) {
-                console.log('success');
-                result = data;
-                res.status(200).json(result);
-            }
-            else {
-                result = {
-                    "error": data.error
-                }
-                res.status(200).json(result);
-            };
-        });
+    const key = params.className;
+    await CGet(key, () => {
+        return getSchedule(params.className, Number(params.year), Number(params.week));
+    }).then(data => {
+        res.status(200).json(data);
+    });
 };

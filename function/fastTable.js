@@ -77,9 +77,6 @@ async function fastTable(id, pwd) {
                         let data;
                         if (response.status == 200) {
                             const $ = cheerio.load(response.data);
-                            let Symbol = $('#qClass').attr('value').split('@')[1];
-                            Symbol = Symbol + $('#F_sPeriodsem').val() + '1';
-                            console.log(Symbol);
                             let location = " > table > tbody > tr > td > span > div > div.";
                             data = {
                                 day1: {
@@ -287,10 +284,7 @@ async function fastTable(id, pwd) {
                                     }
                                 },
                             };
-                            return {
-                                Symbol: Symbol,
-                                data: data
-                            };
+                            return data;
                         }
                         else {
                             return {
