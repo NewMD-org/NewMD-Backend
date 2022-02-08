@@ -1,4 +1,4 @@
-import 'dotenv/config'
+// import 'dotenv/config'
 import fetch from 'node-fetch';
 import axios from 'axios';
 import iconv from 'iconv-lite';
