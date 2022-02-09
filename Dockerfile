@@ -12,7 +12,7 @@ RUN npm install --production && npm cache clean --force
 COPY . .
 
 # default port
-EXPOSE 80
+EXPOSE 3000
 
 # start server
 CMD ["npm", "start"]
