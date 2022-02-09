@@ -19,4 +19,4 @@ ENV PORT 80
 EXPOSE 80
 
 # start server
-# CMD ["npm", "start"]
+CMD ["npm", "start"]
