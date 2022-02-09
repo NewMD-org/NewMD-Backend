@@ -5,7 +5,7 @@ WORKDIR /usr/src/paas
 
 # cache
 # install npm
-COPY package*.json .
+COPY package*.json ./
 RUN npm install --production && npm cache clean --force
 
 # copy source code
