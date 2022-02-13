@@ -13,7 +13,7 @@ export const onlyClassName = async (req, res) => {
 
 export const classNameWithYear = async (req, res) => {
     const params = req.params;
-    const key = params.className;
+    const key = params.className + params.year;
     await CGet(key, () => {
         return getSchedule(params.className, params.year);
     }).then(data => {
@@ -23,7 +23,7 @@ export const classNameWithYear = async (req, res) => {
 
 export const allParams = async (req, res) => {
     const params = req.params;
-    const key = params.className;
+    const key = params.className + params.year + params.week;
     await CGet(key, () => {
         return getSchedule(params.className, Number(params.year), Number(params.week));
     }).then(data => {
