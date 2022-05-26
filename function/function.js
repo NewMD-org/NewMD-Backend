@@ -36,5 +36,6 @@ export const cls = (className) => {
     return {
         input,
         output
-    }
+    };
 }
+

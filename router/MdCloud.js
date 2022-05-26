@@ -1,5 +1,5 @@
 import express from 'express';
-import { None, Login, StdData, FastTable} from '../controllers/cloud.js';
+import { None, Login, StdData, FastTable } from '../controllers/cloud.js';
 
 const router = express.Router();
 
