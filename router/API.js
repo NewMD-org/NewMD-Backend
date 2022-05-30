@@ -1,5 +1,5 @@
 import express from 'express';
-import { onlyClassName, classNameWithYear, allParams } from '../controllers/API.js';
+import { onlyClassName, twoParams, allParams } from '../controllers/API.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -8,7 +8,9 @@ router.get('/', (req, res) => {
 
 router.get('/:className', onlyClassName);
 
-router.get('/:className/:year', classNameWithYear);
+router.get('/:a/:b', twoParams);
+//id, pwd
+//className, year
 
 router.get('/:className/:year/:week', allParams);
 

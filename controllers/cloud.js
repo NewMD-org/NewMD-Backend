@@ -1,7 +1,6 @@
 import login from '../function/login.js';
 import getIndex from '../function/getIndexpage.js';
 import fastTable from '../function/fastTable.js';
-import { CGet } from '../lib/LRUCache.js';
 
 export const None = (_, res) => {
     res.send('請傳入參數');
@@ -35,12 +34,13 @@ export const StdData = (req, res) => {
         });
 };
 
-export const FastTable = async (req, res) => {
+export const directLogin = async (req, res) => {
     const params = req.params;
-    const key = params.id + params.pwd;
-    await CGet(key, () => {
-        return fastTable(params.id, params.pwd);
-    }).then(data => {
+    const data = await fastTable(params.id, params.pwd);
+    if (!data.error) {
         res.status(200).json(data);
-    });
+    }
+    else {
+        res.status(404).json(data.error);
+    };
 };

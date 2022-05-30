@@ -1,5 +1,5 @@
 import express from 'express';
-import { None, Login, StdData, FastTable } from '../controllers/cloud.js';
+import { None, Login, StdData, directLogin } from '../controllers/cloud.js';
 
 const router = express.Router();
 
@@ -9,6 +9,6 @@ router.get('/login/:id/:psd', Login);
 
 router.get('/stdData/:cookie', StdData);
 
-router.get('/fastTable/:id/:pwd', FastTable);
+router.get('/directlogin/:id/:pwd', directLogin);
 
 export default router;
