@@ -6,6 +6,7 @@ import TWtime from '../function/TWtime.js';
 dotenv.config();
 
 const port = process.env.PORT || 3000;
+const host = process.env.HOST || 'localhost';
 
 try {
     let db = await mongoose.connect(process.env.MONGO_URI, {
@@ -14,8 +15,11 @@ try {
     console.log(`[${TWtime().full}] | successfully connected to MongoDB, Database name: "${db.connections[0].name}"`);
     try {
         app.set('port', port);
-        app.listen(app.get('port'));
-        console.log(`[${TWtime().full}] | server is running on http://localhost:3000`);
+        app.set('host', host);
+        var server = app.listen(app.get('port'), app.get('host'), err => {
+            if (err) throw err;
+            console.error(`[${TWtime().full}] | server listening on ${server.address().address}:${server.address().port}`);
+        });
     }
     catch (error) {
         console.error(error.message);

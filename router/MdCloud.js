@@ -1,16 +1,22 @@
 import express from 'express';
-import { None, Login, StdData, table, database } from '../controllers/cloud.js';
+import { none, Login, table, database } from '../controllers/cloud.js';
+
 
 const router = express.Router();
 
-router.get('/', None);
+router.get('/', none);
 
-router.get('/login/:id/:psd', Login);
+router.get('/login', Login);
+// query: [ID, PWD]
 
-router.get('/stdData/:cookie', StdData);
+router.get('/table', table);
+// query: [ID, PWD, meetURL?]
 
-router.get('/table/:id/:pwd', table);
+router.get('/database/:action?', database);
+// param: [save, read]
+// query: [ID, PWD]
 
-router.get('/database/:id/:pwd/:action', database);
+/* PAUSED */
+// router.get('/stdData/:cookie', StdData);
 
 export default router;
