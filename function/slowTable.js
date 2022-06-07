@@ -453,12 +453,3 @@ async function fastTable(id, pwd) {
 }
 
 export default fastTable;
-
-// fastTable("", "").then(data => {
-//     if (!data.error) {
-//         console.log(data);
-//     }
-//     else {
-//         console.error(data.error);
-//     };
-// });

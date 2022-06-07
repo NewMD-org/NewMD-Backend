@@ -34,14 +34,3 @@ async function login(ID, PWD) {
 }
 
 export default login;
-
-/***** Test Code *******/
-// login("", "").then(data => {
-//     if (data.error) {
-//         console.log(data);
-//         console.error(data.error);
-//     }
-//     else {
-//         console.log(data);
-//     };
-// });
