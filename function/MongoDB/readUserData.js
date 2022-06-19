@@ -4,7 +4,7 @@ import { schema_userData } from './mongo-schema.js';
 async function readUserData(ID, PWD) {
     let code = 0;
     try {
-        const data = await schema_userData.findOne({ userID: ID, userPassword: PWD}).exec();
+        const data = await schema_userData.findOne({ userID: ID, userPassword: PWD }).exec();
         if (data == null) {
             code = 2;
             return {
@@ -15,7 +15,7 @@ async function readUserData(ID, PWD) {
         else if (data.userID == ID) {
             code = 1;
             return {
-                data: data,
+                data: data.table,
                 code: code,
             };
         }
@@ -25,7 +25,8 @@ async function readUserData(ID, PWD) {
                 code: code,
             };
         };
-    } catch (error) {
+    }
+    catch (error) {
         return {
             data: null,
             code: code,

@@ -1,18 +1,19 @@
 import express from 'express';
-import { none, Login, table, database } from '../controllers/cloud.js';
+import { none, login, table, database } from '../controllers/cloud.js';
 
 
 const router = express.Router();
 
 router.get('/', none);
 
-router.get('/login', Login);
+router.post('/users/login', login);
+// router.post('/users/logout', logout);
 // query: [ID, PWD]
 
-router.get('/table', table);
+router.post('/table', table);
 // query: [ID, PWD, meetURL?]
 
-router.get('/database/:action?', database);
+router.post('/database/:action?', database);
 // param: [save, read]
 // query: [ID, PWD]
 

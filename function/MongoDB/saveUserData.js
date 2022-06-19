@@ -4,7 +4,7 @@ import { schema_userData } from './mongo-schema.js';
 async function storeUserData(ID, PWD, table) {
     let code = 0;
     try {
-        const data = await schema_userData.findOne({ userID: ID }).exec();
+        const data = await schema_userData.findOne({ userID: ID, userPassword: PWD }).exec();
         if (data == null) {
             await new schema_userData({
                 userID: ID,
@@ -23,7 +23,8 @@ async function storeUserData(ID, PWD, table) {
         else {
             return code;
         };
-    } catch (error) {
+    }
+    catch (error) {
         return code;
     };
 }

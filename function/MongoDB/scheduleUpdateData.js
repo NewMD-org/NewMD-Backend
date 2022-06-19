@@ -6,6 +6,7 @@ import TWtime from '../TWtime.js';
 
 async function scheduleUpdateData() {
     const taskFreq = '00 00 * * *';
+    console.log(`[${TWtime().full}] | scheduled update user data. Task frequency: " ${taskFreq} "`);
     schedule.scheduleJob(taskFreq, async () => {
         const data = await schema_userData.find({});
         data.forEach(async obj => {
