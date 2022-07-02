@@ -18,7 +18,7 @@ async function view_VT(year, eID) {
     };
 }
 
-async function fastTable(id, pwd) {
+async function slowTable(id, pwd) {
     try {
         let firstResponse = await fetch("http://libauto.mingdao.edu.tw/AACourses/Web/wLogin.php", {
             "headers": {
@@ -452,4 +452,4 @@ async function fastTable(id, pwd) {
     };
 }
 
-export default fastTable;
+export default slowTable;

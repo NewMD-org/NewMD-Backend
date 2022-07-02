@@ -10,10 +10,10 @@ router.post('/users/login', login);
 // router.post('/users/logout', logout);
 // query: [ID, PWD]
 
-router.post('/table', table);
+router.get('/table/:meetURL?', table);
 // query: [ID, PWD, meetURL?]
 
-router.post('/database/:action?', database);
+router.get('/database/:action?', database);
 // param: [save, read]
 // query: [ID, PWD]
 

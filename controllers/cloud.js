@@ -54,19 +54,17 @@ export const login = async (req, res) => {
                 };
 
                 if (rememberMe == "true") {
-                    // Return JWT and get table
-                    const JWTtoken = jwt.sign({ userID: userID, userPWD: userPWD }, process.env.JWTtoken, { expiresIn: "7 days" });
+                    const JWTtoken = jwt.sign({ userID: userID, userPWD: userPWD }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
                     res.status(200).set("Authorization", JWTtoken).json({
-                        userID: userID,
-                        userPWD: userPWD,
-                        userDataStatus: userDataStatus,
+                        old: true,
+                        userDataStatus
                     });
                 }
                 else if (rememberMe == "false") {
-                    res.status(200).json({
-                        userID: userID,
-                        userPWD: userPWD,
-                        userDataStatus: userDataStatus,
+                    const JWTtoken = jwt.sign({ userID: userID, userPWD: userPWD }, process.env.JWT_SECRETKEY, { expiresIn: "10 mins" });
+                    res.status(200).set("Authorization", JWTtoken).json({
+                        old: true,
+                        userDataStatus,
                     });
                 }
                 else {
@@ -84,7 +82,7 @@ export const login = async (req, res) => {
     else if (authHeader && (req.body.ID == "" && req.body.PWD == "")) {
         try {
             const token = authHeader.split(' ')[1];
-            const decoded = jwt.verify(token, process.env.JWTtoken);
+            const decoded = jwt.verify(token, process.env.JWT_SECRETKEY);
             const userID = decoded.userID;
             const userPWD = decoded.userPWD;
 
@@ -98,21 +96,33 @@ export const login = async (req, res) => {
                             userDataStatus = "failed";
                             break;
                         case 1:
-                            userDataStatus = "true";
+                            userDataStatus = "found";
                             break;
                         case 2:
-                            userDataStatus = "false";
+                            userDataStatus = "not found";
                             break;
                         default:
                             userDataStatus = "failed";
                             break;
                     };
 
-                    res.status(200).json({
-                        userID: userID,
-                        userPWD: userPWD,
-                        userDataStatus: userDataStatus,
-                    });
+                    if (rememberMe == "true") {
+                        const JWTtoken = jwt.sign({ userID: userID, userPWD: userPWD }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
+                        res.status(200).set("Authorization", JWTtoken).json({
+                            old: false,
+                            userDataStatus,
+                        });
+                    }
+                    else if (rememberMe == "false") {
+                        const JWTtoken = jwt.sign({ userID: userID, userPWD: userPWD }, process.env.JWT_SECRETKEY, { expiresIn: "10 mins" });
+                        res.status(200).set("Authorization", JWTtoken).json({
+                            old: false,
+                            userDataStatus,
+                        });
+                    }
+                    else {
+                        res.status(400).json("rememberMe must be boolean.");
+                    };
                     break;
                 case 1:
                     res.status(400).json("Wrong account.");
@@ -129,123 +139,135 @@ export const login = async (req, res) => {
 };
 
 export const table = async (req, res) => {
-    const RequiredBody = ["ID", "PWD", "meetURL"];
-    const hasAllRequiredBody = RequiredBody.every(item => Object.keys(req.body).includes(item));
-    if (!hasAllRequiredBody || Object.keys(req.body).length < 3) {
-        return res.status(400).send(`The following items are all required for this route : [${RequiredBody.join(", ")}]`);
+    const query = req.query;
+
+    const RequiredQuery = ["meetURL"];
+    const hasAllRequiredQuery = RequiredQuery.every(item => Object.keys(query).includes(item));
+    if (!hasAllRequiredQuery || Object.keys(query).length < RequiredQuery.length) {
+        return res.status(400).send(`The following items are all required for this route : [${RequiredQuery.join(", ")}]`);
     }
-    else if (Object.keys(req.body).length > 3) {
-        return res.status(400).send(`Only allowed ${RequiredBody.length} items in the body : [${RequiredBody.join(", ")}]`);
+    else if (Object.keys(query).length > 3) {
+        return res.status(400).send(`Only allowed ${RequiredQuery.length} items in the body : [${RequiredQuery.join(", ")}]`);
     };
 
-    const userID = req.body.ID;
-    const userPWD = req.body.PWD;
-    const meetURL = req.body.meetURL;
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(400).json(`Please insert auth header.`);
+    };
 
-    if (meetURL == "true") {
-        const data = await slowTable(userID, userPWD);
-        if (!data.error) {
-            return res.status(200).json({ table: data });
+    const meetURL = query.meetURL;
+    try {
+        const token = authHeader.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRETKEY);
+
+        const userID = decoded.userID;
+        const userPWD = decoded.userPWD;
+        try {
+            switch (meetURL) {
+                case "true":
+                    const slowTableData = await slowTable(userID, userPWD);
+                    if (!slowTableData.error) {
+                        return res.status(200).json({ table: slowTableData });
+                    }
+                    else {
+                        throw new Error(slowTableData.error);
+                    };
+                case "false":
+                    const fastTableData = await fastTable(userID, userPWD);
+                    if (!fastTableData.error) {
+                        return res.status(200).json({ table: fastTableData });
+                    }
+                    else {
+                        throw new Error(fastTableData.error);
+                    };
+                case "db":
+                    const userDataResult = await readUserData(userID, userPWD);
+                    switch (userDataResult.code) {
+                        case 0:
+                            throw new Error("Failed to read user data.");
+                        case 1:
+                            res.status(200).json({ table: userDataResult.data });
+                            break;
+                        case 2:
+                            throw new Error("User data not found.");
+                    };
+                    break;
+                default:
+                    throw new Error(`meetURL must be boolean or "db".`);
+            };
         }
-        else {
-            return res.status(400).json(data.error);
+        catch (error) {
+            return res.status(400).json(error.message);
         };
     }
-    else if (meetURL == "false") {
-        const data = await fastTable(userID, userPWD);
-        if (!data.error) {
-            return res.status(200).json({ table: data });
-        }
-        else {
-            return res.status(400).json(data.error);
-        };
-    }
-    else if (meetURL == "db") {
-        const userDataResult = await readUserData(userID, userPWD);
-        switch (userDataResult.code) {
-            case 0:
-                res.status(400).json("Failed to read user data.");
-                break;
-            case 1:
-                res.status(200).json({ table: userDataResult.data });
-                break;
-            case 2:
-                res.status(400).json("User data not found.");
-                break;
-        };
-    }
-    else {
-        res.status(400).json(`meetURL must be boolean or "db".`);
+    catch (error) {
+        return res.status(403).json("Failed to verify, please login again.");
     };
 };
 
 export const database = async (req, res) => {
-    const RequiredBody = ["ID", "PWD"];
-    const hasAllRequiredBody = RequiredBody.every(item => Object.keys(req.body).includes(item));
-    if (!req.params.action) {
-        return res.status(400).send("no param provided. [action] requires");
-    }
-    else if (!hasAllRequiredBody || Object.keys(req.body).length < 2) {
-        return res.status(400).json(`The following items are all required for this route : [${RequiredBody.join(", ")}]`);
-    }
-    else if (Object.keys(req.body).length > 2) {
-        return res.status(400).json(`Only allowed ${RequiredBody.length} items in the body : [${RequiredBody.join(", ")}]`);
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(400).json(`Please insert auth header.`);
     };
 
     const params = req.params;
-    const userID = req.body.ID;
-    const userPWD = req.body.PWD;
+    try {
+        const token = authHeader.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRETKEY);
 
-    switch (params.action) {
-        case "save":
-            const dataToSave = await slowTable(userID, userPWD);
-            code = await saveUserData(userID, userPWD, dataToSave);
-            switch (code) {
-                case 0:
-                    res.status(400).json("Failed to store user data.");
+        const userID = decoded.userID;
+        const userPWD = decoded.userPWD;
+        try {
+            switch (params.action) {
+                case "save":
+                    const dataToSave = await slowTable(userID, userPWD);
+                    const saveUserDataCode = await saveUserData(userID, userPWD, dataToSave);
+                    switch (saveUserDataCode) {
+                        case 0:
+                            throw new Error("Failed to store user data.");
+                        case 1:
+                            res.status(200).json("Successfully stored user data.");
+                            break;
+                        case 2:
+                            res.status(200).json("Successfully updated user data.");
+                            break;
+                    };
                     break;
-                case 1:
-                    res.status(200).json("Successfully stored user data.");
+                case "read":
+                    const userDataResult = await readUserData(userID, userPWD);
+                    switch (userDataResult.code) {
+                        case 0:
+                            throw new Error("Failed to read user data");
+                        case 1:
+                            res.status(200).json({ table: userDataResult.data });
+                            break;
+                        case 2:
+                            throw new Error("User data not found.");
+                    };
                     break;
-                case 2:
-                    res.status(200).json("Successfully updated user data.");
+                case "delete":
+                    const code = await deleteUserData(userID, userPWD);
+                    switch (code) {
+                        case 0:
+                            throw new Error("Failed to delete user data.");
+                        case 1:
+                            res.status(200).json("Successfully deleted user data.");
+                            break;
+                        case 2:
+                            throw new Error("User data not found.");
+                    };
                     break;
+                default:
+                    throw new Error("Wrong param. only allowed [\"save\", \"read\", \"delete\"]");
             };
-            break;
-
-        case "read":
-            const userDataResult = await readUserData(userID, userPWD);
-            switch (userDataResult.code) {
-                case 0:
-                    res.status(400).json("Failed to read user data");
-                    break;
-                case 1:
-                    res.status(200).json({ table: userDataResult.data });
-                    break;
-                case 2:
-                    res.status(400).json("User data not found.");
-                    break;
-            };
-            break;
-
-        case "delete":
-            const code = await deleteUserData(userID, userPWD);
-            switch (code) {
-                case 0:
-                    res.status(400).json("Failed to delete user data.");
-                    break;
-                case 1:
-                    res.status(200).json("Successfully deleted user data.");
-                    break;
-                case 2:
-                    res.status(400).json("User data not found.");
-                    break;
-            };
-            break;
-
-        default:
-            res.status(400).send("Wrong param. only allowed [\"save\", \"read\", \"delete\"]");
-            break;
+        }
+        catch (error) {
+            return res.status(400).json(error.message);
+        };
+    }
+    catch (error) {
+        return res.status(403).json("Failed to verify, please login again.");
     };
 };
 
