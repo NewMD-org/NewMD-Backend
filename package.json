@@ -9,8 +9,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --trace-warnings ./bin/server.js",
-    "start": "node ./bin/server.js",
-    "test": "node ./tests/API.test.js"
+    "start": "node ./bin/server.js"
   },
   "author": "AAAA",
   "license": "MIT",
