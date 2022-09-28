@@ -1,11 +1,11 @@
-import schedule from 'node-schedule';
-import { schema_userData } from './mongo-schema.js';
-import slowTable from '../slowTable.js';
-import TWtime from '../TWtime.js';
+import schedule from "node-schedule";
+import { schema_userData } from "./mongo-schema.js";
+import { slowTable } from "../Table/slowTable.js";
+import { TWtime } from "../TWtime.js";
 
 
-async function scheduleUpdateData() {
-    const taskFreq = '00 00 * * *';
+export async function scheduleUpdateData() {
+    const taskFreq = "00 00 * * *";
     console.log(`[${TWtime().full}] | scheduled update user data. Task frequency: " ${taskFreq} "`);
     schedule.scheduleJob(taskFreq, async () => {
         const data = await schema_userData.find({});
@@ -21,8 +21,6 @@ async function scheduleUpdateData() {
         });
     });
 }
-
-export default scheduleUpdateData;
 
 
 /*\

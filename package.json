@@ -1,5 +1,5 @@
 {
-  "name": "mdapitest",
+  "name": "mdtimetableapi",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -12,7 +12,7 @@
     "start": "node ./bin/server.js",
     "test": "node ./tests/API.test.js"
   },
-  "author": "LAZP",
+  "author": "AAAA",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.25.0",

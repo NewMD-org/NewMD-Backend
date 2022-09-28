@@ -1,7 +1,7 @@
-import { schema_userData } from './mongo-schema.js';
+import { schema_userData } from "./mongo-schema.js";
 
 
-async function storeUserData(ID, PWD, table) {
+export default async function storeUserData(ID, PWD, table) {
     let code = 0;
     try {
         const data = await schema_userData.findOne({ userID: ID, userPassword: PWD }).exec();
@@ -28,5 +28,3 @@ async function storeUserData(ID, PWD, table) {
         return code;
     };
 }
-
-export default storeUserData;
