@@ -9,7 +9,7 @@ const APItimeout25 = new MdTimetableAPI(25);
 const APItimeout35 = new MdTimetableAPI(35);
 
 export const none = (_, res) => {
-    res.status(400).send("請傳入參數");
+    res.status(400).json("Please insert correct path.");
 };
 
 export const login = async (req, res) => {
@@ -55,7 +55,7 @@ export const login = async (req, res) => {
             case 0:
                 if (rememberMe == "true") {
                     const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "true" }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
-                    res.status(200).set("Authorization", JWTtoken).json({
+                    res.status(200).set("Authorization", JWTtoken).json({   
                         error: null,
                         userDataStatus
                     });
@@ -72,19 +72,33 @@ export const login = async (req, res) => {
                 };
                 break;
             case 1:
-                res.status(401).json("Wrong account.");
+                res.status(401).json("Incorrect account or password.");
                 break;
             case 2:
-                res.status(401).json("Wrong password.");
+                res.status(401).json("Incorrect account or password.");
                 break;
             case 3:
-                res.status(200).json({
-                    error: loginResult.error,
-                    userDataStatus
-                });
+                if (rememberMe == "true") {
+                    const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "true" }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
+                    res.status(200).set("Authorization", JWTtoken).json({
+                        error: loginResult.error,
+                        userDataStatus
+                    });
+                }
+                else if (rememberMe == "false") {
+                    const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "false" }, process.env.JWT_SECRETKEY, { expiresIn: "10 mins" });
+                    res.status(200).set("Authorization", JWTtoken).json({
+                        error: loginResult.error,
+                        userDataStatus,
+                    });
+                }
+                else {
+                    res.status(400).json("rememberMe must be boolean.");
+                };
                 break;
         };
     } catch (error) {
+        console.log(error);
         return res.status(500).json("Server error.");
     };
 };

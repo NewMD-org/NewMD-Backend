@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import mdcloud from "./router/MdCloud.js";
+import mdcloud from "../router/MdCloud.js";
 // import API from "./router/API.js";
 
 
@@ -11,9 +11,12 @@ cloud.use(cors({
     origin: [
         "http://localhost:3000",
         "http://localhost:3001",
-        "https://newmd.loca.lt",
-        "https://newmd.netlify.app",
-        "https://newmd.onrender.com"
+        "http://test.haco.tw",
+        "https://k1d1.haco.tw",
+        "https://test.aaaaoncloud.eu.org",
+        "https://newmd.aaaaoncloud.eu.org",
+        "https://newmd.eu.org",
+        "https://newmd.netlify.app"
     ]
 }));
 cloud.use(bodyParser.urlencoded({ extended: true }));
@@ -27,8 +30,6 @@ cloud.use("/", mdcloud);
 // api.use("/", API);
 
 const app = express();
-// app.use(vhost("cloud." + host, cloud));
-app.use("/cloud", cloud);
-// app.use(vhost("api." + host, api));
+app.use("/", cloud);
 
 export default app;

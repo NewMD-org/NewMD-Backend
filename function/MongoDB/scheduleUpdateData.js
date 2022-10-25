@@ -1,8 +1,10 @@
 import schedule from "node-schedule";
+import MdTimetableAPI from "../Table/index.js";
 import { schema_userData } from "./mongo-schema.js";
-import { slowTable } from "../Table/slowTable.js";
 import { TWtime } from "../TWtime.js";
 
+
+const APItimeout35 = new MdTimetableAPI(35);
 
 export async function scheduleUpdateData() {
     const taskFreq = "00 00 * * *";
@@ -12,12 +14,17 @@ export async function scheduleUpdateData() {
         data.forEach(async obj => {
             const ID = obj.userID;
             const PWD = obj.userPassword;
-            const table = await slowTable(ID, PWD);
-            await schema_userData.findOneAndUpdate(
-                { userID: ID, userPassword: PWD },
-                { table: table }
-            );
-            console.log(`[${TWtime().full}] | updated data for user : ${ID}`);
+            const slowTableData = await APItimeout35.slowTable(ID, PWD);
+            if (!slowTableData.error) {
+                await schema_userData.findOneAndUpdate(
+                    { userID: ID, userPassword: PWD },
+                    { table: slowTableData }
+                );
+                return console.log(`[${TWtime().full}] | updated data for user : ${ID}`);
+            }
+            else {
+                console.error(slowTableData.error);
+            };
         });
     });
 }

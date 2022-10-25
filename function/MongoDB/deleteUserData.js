@@ -1,4 +1,4 @@
-import { schema_userData } from './mongo-schema.js';
+import { schema_userData } from "./mongo-schema.js";
 
 
 export default async function deleteUserData(ID, PWD) {
