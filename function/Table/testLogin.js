@@ -1,13 +1,8 @@
 import axios from "axios";
 
 
-async function sleep(sec = 0) {
-    return new Promise(r => setTimeout(r, sec * 1000));
-}
-
 export async function testLogin(ID, PWD, timeout) {
     var response = {};
-    await sleep(3)
     try {
         const loginResponse = await axios.get(
             `http://140.128.156.40/crm/login.asp?user_id=${ID}&user_password=${PWD}`,
