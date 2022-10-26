@@ -8,7 +8,7 @@ export default class MongoDB {
         return readUserData(ID, PWD);
     }
     save(ID, PWD, table) {
-        return saveUserData(ID, PWD, table)
+        return saveUserData(ID, PWD, table);
     }
     delete(ID, PWD) {
         return deleteUserData(ID, PWD);

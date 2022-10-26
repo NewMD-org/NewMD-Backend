@@ -1,7 +1,6 @@
 import app from "./app.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import localtunnel from "localtunnel";
 import { TWtime } from "../function/TWtime.js";
 import { scheduleUpdateData } from "../function/MongoDB/scheduleUpdateData.js";
 
@@ -21,13 +20,6 @@ try {
         console.error(`[${TWtime().full}] | server listening on ${host}:${server.address().port}`);
         scheduleUpdateData();
     });
-
-    // const tunnel = await localtunnel({
-    //    local_host: host,
-    //    port: 4000,
-    //    subdomain: "newmdcloud"
-    // });
-    // console.log(`[${TWtime().full}] | Local tunnel started, url: ${tunnel.url}`);
 }
 catch (error) {
     console.error(error.message);
