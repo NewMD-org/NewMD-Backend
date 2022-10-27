@@ -1,6 +1,6 @@
-import { testLogin } from "./testLogin.js";
-import { fastTable } from "./fastTable.js";
-import { slowTable } from "./slowTable.js";
+import { testLogin } from "./functions/testLogin.js";
+import { fastTable } from "./functions/fastTable.js";
+import { slowTable } from "./functions/slowTable.js";
 
 
 export default class MdTimetableAPI {
@@ -8,15 +8,15 @@ export default class MdTimetableAPI {
         this.timeout = timeoutSec * 1000 | 0;
     }
 
-    async login(ID, PWD) {
+    login(ID, PWD) {
         return testLogin(ID, PWD, this.timeout);
     }
 
-    async fastTable(ID, PWD) {
+    fastTable(ID, PWD) {
         return fastTable(ID, PWD, this.timeout);
     }
 
-    async slowTable(ID, PWD) {
+    slowTable(ID, PWD) {
         return slowTable(ID, PWD, this.timeout);
     }
 }

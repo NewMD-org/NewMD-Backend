@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 import axios from "axios";
 import iconv from "iconv-lite";
 import cheerio from "cheerio";
-import { viewVT } from "../viewVT.js";
+import { viewVT } from "./viewVT.js";
 
 
 export async function slowTable(ID, PWD, timeout) {

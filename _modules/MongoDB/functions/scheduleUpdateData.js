@@ -1,13 +1,12 @@
 import schedule from "node-schedule";
-import MdTimetableAPI from "../Table/index.js";
+import MdTimetableAPI from "../../MdTimetableAPI/index.js";
 import { schema_userData } from "./mongo-schema.js";
-import { TWtime } from "../TWtime.js";
+import { TWtime } from "../../TWtime/index.js";
 
 
 const APItimeout35 = new MdTimetableAPI(35);
 
-export async function scheduleUpdateData() {
-    const taskFreq = "00 00 * * *";
+export default async function scheduleUpdateData(taskFreq) {
     console.log(`[${TWtime().full}] | scheduled update user data. Task frequency: " ${taskFreq} "`);
     schedule.scheduleJob(taskFreq, async () => {
         const data = await schema_userData.find({});
