@@ -3,10 +3,10 @@ import MdTimetableAPI from "../../../_modules/MdTimetableAPI/index.js";
 import MongoDB from "../../../_modules/MongoDB/index.js";
 
 
-const DataBase = new MongoDB();
+const DB = new MongoDB();
 const APItimeout35 = new MdTimetableAPI(35);
 
-export const database = async (req, res) => {
+export default database = async (req, res) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
         return res.status(400).json(`Please insert auth header.`);
@@ -24,7 +24,7 @@ export const database = async (req, res) => {
                 case "save":
                     const dataToSave = await APItimeout35.slowTable(ID, PWD);
                     if (!dataToSave.error) {
-                        const saveUserDataCode = await DataBase.save(ID, PWD, dataToSave);
+                        const saveUserDataCode = await DB.save(ID, PWD, dataToSave);
                         switch (saveUserDataCode) {
                             case 0:
                                 throw new Error("Failed to store user data.");
@@ -41,7 +41,7 @@ export const database = async (req, res) => {
                     };
                     break;
                 case "read":
-                    const userDataResult = await DataBase.read(ID, PWD);
+                    const userDataResult = await DB.read(ID, PWD);
                     switch (userDataResult.code) {
                         case 0:
                             throw new Error("Failed to read user data");
@@ -53,7 +53,7 @@ export const database = async (req, res) => {
                     };
                     break;
                 case "delete":
-                    const code = await DataBase.delete(ID, PWD);
+                    const code = await DB.delete(ID, PWD);
                     switch (code) {
                         case 0:
                             throw new Error("Failed to delete user data.");
