@@ -14,18 +14,13 @@ export async function viewVT(year, classID, cache, timeout) {
             }
         );
         if (response.status === 200) {
-            try {
-                const $ = load(response.data);
-                const obj = {
-                    meet: $("#main > div:nth-child(3) > a").html().replace(/ /g, ""),
-                    classroom: $("#main > div:nth-child(5)").html()
-                };
-                cache[classID] = obj;
-                return obj;
-            }
-            catch (err) {
-                throw new Error("Year or classID not found");
+            const $ = load(response.data);
+            const obj = {
+                meet: $("#main > div:nth-child(3) > a").html().replace(/ /g, ""),
+                classroom: $("#main > div:nth-child(5)").html()
             };
+            cache[classID] = obj;
+            return obj;
         }
         else {
             throw new Error("MD server error");
