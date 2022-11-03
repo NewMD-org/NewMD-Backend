@@ -6,7 +6,7 @@ import MongoDB from "../../../_modules/MongoDB/index.js";
 const DB = new MongoDB();
 const APItimeout35 = new MdTimetableAPI(35);
 
-export default database = async (req, res) => {
+export const database = async (req, res) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
         return res.status(400).json(`Please insert auth header.`);
@@ -46,7 +46,7 @@ export default database = async (req, res) => {
                         case 0:
                             throw new Error("Failed to read user data");
                         case 1:
-                            res.status(200).json({ table: userDataResult.data });
+                            res.status(200).json({ year: userDataResult.year, table: userDataResult.table });
                             break;
                         case 2:
                             throw new Error("User data not found.");

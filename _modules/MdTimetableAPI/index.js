@@ -19,4 +19,8 @@ export default class MdTimetableAPI {
     slowTable(ID, PWD) {
         return slowTable(ID, PWD, this.timeout);
     }
+
+    viewVT() {
+
+    }
 }

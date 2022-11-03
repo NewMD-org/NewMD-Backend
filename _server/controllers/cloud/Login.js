@@ -6,7 +6,7 @@ import MongoDB from "../../../_modules/MongoDB/index.js";
 const DB = new MongoDB();
 const APItimeout5 = new MdTimetableAPI(5);
 
-export default login = async (req, res) => {
+export const login = async (req, res) => {
     const RequiredBody = ["ID", "PWD", "rememberMe"];
     const hasAllRequiredBody = RequiredBody.every(item => Object.keys(req.body).includes(item));
     if (!hasAllRequiredBody || Object.keys(req.body).length < 3) {

@@ -8,27 +8,31 @@ export default async function readUserData(ID, PWD) {
         if (data == null) {
             code = 2;
             return {
-                data: null,
+                year: null,
+                table: null,
                 code: code,
             };
         }
         else if (data.userID == ID) {
             code = 1;
             return {
-                data: data.table,
+                year: data.year,
+                table: data.table,
                 code: code,
             };
         }
         else {
             return {
-                data: null,
+                year: null,
+                table: null,
                 code: code,
             };
         };
     }
     catch (error) {
         return {
-            data: null,
+            year: null,
+            table: null,
             code: code,
         };
     };

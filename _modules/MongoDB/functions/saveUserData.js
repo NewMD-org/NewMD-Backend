@@ -1,7 +1,7 @@
 import { schema_userData } from "./mongo-schema.js";
 
 
-export default async function storeUserData(ID, PWD, table) {
+export default async function storeUserData(ID, PWD, dataToSave) {
     let code = 0;
     try {
         const data = await schema_userData.findOne({ userID: ID, userPassword: PWD }).exec();
@@ -9,14 +9,18 @@ export default async function storeUserData(ID, PWD, table) {
             await new schema_userData({
                 userID: ID,
                 userPassword: PWD,
-                table: table,
+                year: dataToSave["year"],
+                table: dataToSave["table"]
             }).save();
             return code = 1;
         }
         else if (data.userID == ID) {
             await schema_userData.findOneAndUpdate(
                 { userID: ID, userPassword: PWD },
-                { table: table }
+                {
+                    year: dataToSave["year"],
+                    table: dataToSave["table"]
+                }
             );
             return code = 2;
         }

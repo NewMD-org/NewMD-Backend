@@ -1,4 +1,6 @@
 import axios from "axios";
+import iconv from "iconv-lite";
+import { load } from "cheerio";
 
 
 export async function testLogin(ID, PWD, timeout) {
@@ -7,7 +9,10 @@ export async function testLogin(ID, PWD, timeout) {
         const loginResponse = await axios.get(
             `http://140.128.156.40/crm/login.asp?user_id=${ID}&user_password=${PWD}`,
             {
-                timeout: timeout
+                timeout: timeout,
+                "transformResponse": [data => {
+                    return iconv.decode(Buffer.from(data), "big5");
+                }]
             }
         );
         const loginResponse_cookie = loginResponse.headers["set-cookie"].toString().split(";")[0];
@@ -19,6 +24,9 @@ export async function testLogin(ID, PWD, timeout) {
                     status = 0;
                     break;
                 case "/crm/index.asp":
+                    // const $ = load(loginResponse.data);
+                    // // console.log($("body > table:nth-child(1) > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(3) > td > table:nth-child(1) > tbody > tr:nth-child(1) > td:nth-child(2) > font > strong"));
+                    // console.log(loginResponse.data);
                     status = 0;
                     break;
                 case "/crm/mess.asp?err_code=1":

@@ -4,7 +4,7 @@ import { schema_userData } from "./mongo-schema.js";
 import { TWtime } from "../../TWtime/index.js";
 
 
-const APItimeout35 = new MdTimetableAPI(35);
+const APItimeout60 = new MdTimetableAPI(60);
 
 export default async function scheduleUpdateData(taskFreq) {
     console.log(`[${TWtime().full}] | scheduled update user data. Task frequency: " ${taskFreq} "`);
@@ -13,11 +13,14 @@ export default async function scheduleUpdateData(taskFreq) {
         data.forEach(async obj => {
             const ID = obj.userID;
             const PWD = obj.userPassword;
-            const slowTableData = await APItimeout35.slowTable(ID, PWD);
+            const slowTableData = await APItimeout60.slowTable(ID, PWD);
             if (!slowTableData.error) {
                 await schema_userData.findOneAndUpdate(
                     { userID: ID, userPassword: PWD },
-                    { table: slowTableData }
+                    {
+                        year: slowTableData["year"],
+                        table: slowTableData["table"]
+                    }
                 );
                 return console.log(`[${TWtime().full}] | updated data for user : ${ID}`);
             }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import cheerio from "cheerio";
+import { load } from "cheerio";
 
 
 export async function viewVT(year, classID, cache) {
@@ -7,9 +7,9 @@ export async function viewVT(year, classID, cache) {
         return cache[classID];
     }
     else {
-        const response = await axios.get(`http://libauto.mingdao.edu.tw/AACourses/Web/qVT.php?F_sPeriodsem=${year}&eID=${classID}`);
+        const response = await axios.get(`http://140.128.156.92/AACourses/Web/qVT.php?F_sPeriodsem=${year}&eID=${classID}`);
         if (response.status === 200) {
-            const $ = cheerio.load(response.data);
+            const $ = load(response.data);
             const obj = {
                 meet: $("#main > div:nth-child(3) > a").html() ? $("#main > div:nth-child(3) > a").html().replace(/ /g, "") : "",
                 classroom: $("#main > div:nth-child(5)").html() ? $("#main > div:nth-child(5)").html() : ""

@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import axios from "axios";
 import iconv from "iconv-lite";
-import cheerio from "cheerio";
+import { load } from "cheerio";
 import { viewVT } from "./viewVT.js";
 
 
@@ -75,7 +75,7 @@ export async function slowTable(ID, PWD, timeout) {
             }
         );
         if (getTableResponse.status == 200) {
-            const $ = cheerio.load(getTableResponse.data);
+            const $ = load(getTableResponse.data);
             const location = " > table > tbody > tr > td > span > div > div.";
             try {
                 var year;
@@ -436,7 +436,10 @@ export async function slowTable(ID, PWD, timeout) {
                         },
                     },
                 };
-                return data;
+                return {
+                    year,
+                    data
+                };
             }
             catch (error) {
                 console.log(error);

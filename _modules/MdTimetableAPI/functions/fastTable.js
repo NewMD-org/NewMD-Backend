@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import axios from "axios";
 import iconv from "iconv-lite";
-import cheerio from "cheerio";
+import { load } from "cheerio";
 
 
 export async function fastTable(ID, PWD, timeout) {
@@ -74,9 +74,17 @@ export async function fastTable(ID, PWD, timeout) {
             }
         );
         if (getTableResponse.status == 200) {
-            const $ = cheerio.load(getTableResponse.data);
+            const $ = load(getTableResponse.data);
             const location = " > table > tbody > tr > td > span > div > div.";
+
             try {
+                var year;
+                $("#F_sPeriodsem option").each((i, option) => {
+                    if (Object.keys($(option).attr()).includes("selected")) {
+                        year = $(option).attr().value;
+                    };
+                });
+
                 var data = {
                     day1: {
                         1: {
@@ -331,7 +339,10 @@ export async function fastTable(ID, PWD, timeout) {
                         },
                     },
                 };
-                return data;
+                return {
+                    year,
+                    data
+                };
             }
             catch (error) {
                 throw new Error("Error during getting table");

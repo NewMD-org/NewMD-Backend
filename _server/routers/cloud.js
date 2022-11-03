@@ -12,7 +12,7 @@ router.get("/ping", (_, res) => {
 
 router.post("/users/login", login);
 
-router.get("/table/:meetURL?", table);
+router.get("/table:meetURL?", table);
 
 router.get("/database/:action?", database);
 

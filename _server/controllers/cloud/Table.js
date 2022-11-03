@@ -96,7 +96,7 @@ const APItimeout35 = new MdTimetableAPI(35);
 //     };
 // };
 
-export default table = async (req, res) => {
+export const table = async (req, res) => {
     const RequiredQuery = ["meetURL"];
     const hasAllRequiredQuery = RequiredQuery.every(item => Object.keys(req.query).includes(item));
     if (!hasAllRequiredQuery || Object.keys(req.query).length < RequiredQuery.length) {
@@ -124,7 +124,7 @@ export default table = async (req, res) => {
                 case "true":
                     const slowTableData = await APItimeout35.slowTable(ID, PWD);
                     if (!slowTableData.error) {
-                        return res.status(200).json({ table: slowTableData });
+                        return res.status(200).json({ year: slowTableData.year, table: slowTableData.data });
                     }
                     else {
                         throw new Error(slowTableData.error);
@@ -132,7 +132,7 @@ export default table = async (req, res) => {
                 case "false":
                     const fastTableData = await APItimeout25.fastTable(ID, PWD);
                     if (!fastTableData.error) {
-                        return res.status(200).json({ table: fastTableData });
+                        return res.status(200).json({ year: fastTableData.year, table: fastTableData.data });
                     }
                     else {
                         throw new Error(fastTableData.error);
@@ -143,7 +143,7 @@ export default table = async (req, res) => {
                         case 0:
                             throw new Error("Failed to read user data.");
                         case 1:
-                            res.status(200).json({ table: userDataResult.data });
+                            res.status(200).json({ year: userDataResult.year, table: userDataResult.table });
                             break;
                         case 2:
                             throw new Error("User data not found.");
