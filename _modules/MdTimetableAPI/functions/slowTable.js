@@ -86,7 +86,7 @@ export async function slowTable(ID, PWD, timeout) {
                 });
 
                 var cache = {};
-                var data = {
+                var table = {
                     day1: {
                         1: {
                             classname: $(`#F_1_1${location}subj`).html() ? $(`#F_1_1${location}subj`).html() : "",
@@ -438,7 +438,7 @@ export async function slowTable(ID, PWD, timeout) {
                 };
                 return {
                     year,
-                    data
+                    table
                 };
             }
             catch (error) {

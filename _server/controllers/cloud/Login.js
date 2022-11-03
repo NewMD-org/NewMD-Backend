@@ -9,10 +9,10 @@ const APItimeout5 = new MdTimetableAPI(5);
 export const login = async (req, res) => {
     const RequiredBody = ["ID", "PWD", "rememberMe"];
     const hasAllRequiredBody = RequiredBody.every(item => Object.keys(req.body).includes(item));
-    if (!hasAllRequiredBody || Object.keys(req.body).length < 3) {
+    if (!hasAllRequiredBody || Object.keys(req.body).length < RequiredQuery.length) {
         return res.status(400).json(`The following items are all required for this route : [${RequiredBody.join(", ")}]`);
     }
-    else if (Object.keys(req.body).length > 3) {
+    else if (Object.keys(req.body).length > RequiredQuery.length) {
         return res.status(400).json(`Only allowed ${RequiredBody.length} items in the body : [${RequiredBody.join(", ")}]`);
     }
     else if (req.body.ID == "") {

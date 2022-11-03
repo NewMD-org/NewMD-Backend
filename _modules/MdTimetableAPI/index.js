@@ -1,6 +1,7 @@
 import { testLogin } from "./functions/testLogin.js";
 import { fastTable } from "./functions/fastTable.js";
 import { slowTable } from "./functions/slowTable.js";
+import { viewVT } from "./functions/viewVT.js";
 
 
 export default class MdTimetableAPI {
@@ -20,7 +21,8 @@ export default class MdTimetableAPI {
         return slowTable(ID, PWD, this.timeout);
     }
 
-    viewVT() {
-
+    viewVT(year, classID) {
+        var cache = {};
+        return viewVT(year, classID, cache, this.timeout);
     }
 }

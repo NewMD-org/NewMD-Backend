@@ -1,6 +1,5 @@
 import axios from "axios";
 import iconv from "iconv-lite";
-import { load } from "cheerio";
 
 
 export async function testLogin(ID, PWD, timeout) {
@@ -24,9 +23,6 @@ export async function testLogin(ID, PWD, timeout) {
                     status = 0;
                     break;
                 case "/crm/index.asp":
-                    // const $ = load(loginResponse.data);
-                    // // console.log($("body > table:nth-child(1) > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(3) > td > table:nth-child(1) > tbody > tr:nth-child(1) > td:nth-child(2) > font > strong"));
-                    // console.log(loginResponse.data);
                     status = 0;
                     break;
                 case "/crm/mess.asp?err_code=1":

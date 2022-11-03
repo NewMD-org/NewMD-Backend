@@ -85,7 +85,7 @@ export async function fastTable(ID, PWD, timeout) {
                     };
                 });
 
-                var data = {
+                var table = {
                     day1: {
                         1: {
                             classname: $(`#F_1_1${location}subj`).html() ? $(`#F_1_1${location}subj`).html() : "",
@@ -341,7 +341,7 @@ export async function fastTable(ID, PWD, timeout) {
                 };
                 return {
                     year,
-                    data
+                    table
                 };
             }
             catch (error) {
