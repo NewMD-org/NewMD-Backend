@@ -1,7 +1,9 @@
 # NewMD-Backend
 This is the backend API for NewMD, built by express-js.
 
-## Backend status ([**Better Uptime**](https://status.newmd.eu.org))
+## Backend status
+
+More details : [**Better Uptime**](https://status.newmd.eu.org)
 
 ### Main backend service
 
