@@ -9,7 +9,7 @@ const APItimeout35 = new MdTimetableAPI(35);
 export const database = async (req, res) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        return res.status(400).json(`Please insert auth header.`);
+        return res.status(400).json(`Please insert auth header`);
     };
 
     const params = req.params;
@@ -27,17 +27,17 @@ export const database = async (req, res) => {
                         const saveUserDataCode = await DB.save(ID, PWD, dataToSave);
                         switch (saveUserDataCode) {
                             case 0:
-                                throw new Error("Failed to store user data.");
+                                throw new Error("Failed to store user data");
                             case 1:
-                                res.status(200).json("Successfully stored user data.");
+                                res.status(200).json("Successfully stored user data");
                                 break;
                             case 2:
-                                res.status(200).json("Successfully updated user data.");
+                                res.status(200).json("Successfully updated user data");
                                 break;
                         };
                     }
                     else {
-                        throw new Error(dataToSave.error);
+                        throw new Error("Failed to store user data");
                     };
                     break;
                 case "read":
@@ -46,22 +46,22 @@ export const database = async (req, res) => {
                         case 0:
                             throw new Error("Failed to read user data");
                         case 1:
-                            res.status(200).json({ year: userDataResult.year, table: userDataResult.table });
+                            res.status(200).json({ year: userDataResult.year, table: userDataResult.table, updatedAt: userDataResult.updatedAt });
                             break;
                         case 2:
-                            throw new Error("User data not found.");
+                            throw new Error("User data not found");
                     };
                     break;
                 case "delete":
                     const code = await DB.delete(ID, PWD);
                     switch (code) {
                         case 0:
-                            throw new Error("Failed to delete user data.");
+                            throw new Error("Failed to delete user data");
                         case 1:
-                            res.status(200).json("Successfully deleted user data.");
+                            res.status(200).json("Successfully deleted user data");
                             break;
                         case 2:
-                            throw new Error("User data not found.");
+                            throw new Error("User data not found");
                     };
                     break;
                 default:
@@ -73,6 +73,6 @@ export const database = async (req, res) => {
         };
     }
     catch (error) {
-        return res.status(403).json("Failed to verify, please login again.");
+        return res.status(403).json("Failed to verify, please login again");
     };
 };

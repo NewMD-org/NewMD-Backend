@@ -27,7 +27,7 @@ export async function slowTable(ID, PWD, timeout) {
             firstResponse_cookie = firstResponse_setCookie.split(";")[0];
         }
         else {
-            throw new Error("MD server error");
+            throw new Error("slowTable : MD server error");
         };
 
         let loginResponse = await fetch(
@@ -53,7 +53,7 @@ export async function slowTable(ID, PWD, timeout) {
             loginResponse_cookie = firstResponse_cookie;
         }
         else {
-            throw new Error("MD server error");
+            throw new Error("slowTable : MD server error");
         };
 
         let getTableResponse = await axios.request(
@@ -442,12 +442,11 @@ export async function slowTable(ID, PWD, timeout) {
                 };
             }
             catch (error) {
-                console.log(error);
-                throw new Error("Error during getting table");
+                throw new Error("slowTable : Error during getting table");
             };
         }
         else {
-            throw new Error("MD server error");
+            throw new Error("slowTable : MD server error");
         };
     }
     catch (error) {

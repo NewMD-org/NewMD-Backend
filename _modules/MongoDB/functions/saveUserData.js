@@ -10,7 +10,8 @@ export default async function storeUserData(ID, PWD, dataToSave) {
                 userID: ID,
                 userPassword: PWD,
                 year: dataToSave["year"],
-                table: dataToSave["table"]
+                table: dataToSave["table"],
+                updatedAt: new Date()
             }).save();
             return code = 1;
         }
@@ -19,7 +20,8 @@ export default async function storeUserData(ID, PWD, dataToSave) {
                 { userID: ID, userPassword: PWD },
                 {
                     year: dataToSave["year"],
-                    table: dataToSave["table"]
+                    table: dataToSave["table"],
+                    updatedAt: new Date()
                 }
             );
             return code = 2;

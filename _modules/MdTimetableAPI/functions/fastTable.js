@@ -26,7 +26,7 @@ export async function fastTable(ID, PWD, timeout) {
             firstResponse_cookie = firstResponse_setCookie.split(";")[0];
         }
         else {
-            throw new Error("MD server error");
+            throw new Error("fastTable : MD server error");
         };
 
         let loginResponse = await fetch(
@@ -52,7 +52,7 @@ export async function fastTable(ID, PWD, timeout) {
             loginResponse_cookie = firstResponse_cookie;
         }
         else {
-            throw new Error("MD server error");
+            throw new Error("fastTable : MD server error");
         };
 
         let getTableResponse = await axios.request(
@@ -345,14 +345,14 @@ export async function fastTable(ID, PWD, timeout) {
                 };
             }
             catch (error) {
-                throw new Error("Error during getting table");
+                throw new Error("fastTable : Error during getting table");
             };
         }
         else {
-            throw new Error("MD server error");
+            throw new Error("fastTable : MD server error");
         };
     }
     catch (error) {
-        throw new Error("MD server error");
+        throw new Error("fastTable : MD server error");
     };
 }

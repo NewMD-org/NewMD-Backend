@@ -8,7 +8,7 @@ import { viewvt } from "../controllers/cloud/ViewVT.js";
 const router = express.Router();
 
 router.get("/ping", (_, res) => {
-    res.status(200).json("Service is running.");
+    res.status(200).json("Service is running");
 });
 
 router.post("/users/login", login);
@@ -20,7 +20,7 @@ router.get("/viewvt", viewvt);
 router.get("/database/:action?", database);
 
 router.get("/*", (_, res) => {
-    res.status(400).json("Please insert correct path.");
+    res.status(400).json("Please insert correct path");
 });
 
 export default router;

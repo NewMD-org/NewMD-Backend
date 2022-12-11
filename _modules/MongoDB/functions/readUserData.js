@@ -10,6 +10,7 @@ export default async function readUserData(ID, PWD) {
             return {
                 year: null,
                 table: null,
+                updatedAt: data.updatedAt,
                 code: code,
             };
         }
@@ -18,6 +19,7 @@ export default async function readUserData(ID, PWD) {
             return {
                 year: data.year,
                 table: data.table,
+                updatedAt: data.updatedAt,
                 code: code,
             };
         }
@@ -25,6 +27,7 @@ export default async function readUserData(ID, PWD) {
             return {
                 year: null,
                 table: null,
+                updatedAt: null,
                 code: code,
             };
         };
@@ -33,6 +36,7 @@ export default async function readUserData(ID, PWD) {
         return {
             year: null,
             table: null,
+            updatedAt: null,
             code: code,
         };
     };

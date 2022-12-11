@@ -16,10 +16,10 @@ export const login = async (req, res) => {
         return res.status(400).json(`Only allowed ${RequiredBody.length} items in the body : [${RequiredBody.join(", ")}]`);
     }
     else if (req.body.ID == "") {
-        return res.status(400).json("Missing Username.");
+        return res.status(400).json("Missing Username");
     }
     else if (req.body.PWD == "") {
-        return res.status(400).json("Missing Password.");
+        return res.status(400).json("Missing Password");
     };
 
     const ID = req.body.ID;
@@ -62,14 +62,14 @@ export const login = async (req, res) => {
                     });
                 }
                 else {
-                    res.status(400).json("rememberMe must be boolean.");
+                    res.status(400).json("rememberMe must be boolean");
                 };
                 break;
             case 1:
-                res.status(401).json("Incorrect account or password.");
+                res.status(401).json("Incorrect account or password");
                 break;
             case 2:
-                res.status(401).json("Incorrect account or password.");
+                res.status(401).json("Incorrect account or password");
                 break;
             case 3:
                 if (rememberMe == "true") {
@@ -87,12 +87,12 @@ export const login = async (req, res) => {
                     });
                 }
                 else {
-                    res.status(400).json("rememberMe must be boolean.");
+                    res.status(400).json("rememberMe must be boolean");
                 };
                 break;
         };
     } catch (error) {
         console.log(error);
-        return res.status(500).json("Server error.");
+        return res.status(500).json("Server error");
     };
 };

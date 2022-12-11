@@ -42,16 +42,15 @@ export async function testLogin(ID, PWD, timeout) {
             response = {
                 status: 3,
                 cookie: null,
-                error: "MD server error",
+                error: "testLogin : MD server error",
             };
         };
     }
     catch (error) {
-        console.log(error);
         response = {
             status: 3,
             cookie: null,
-            error: "MD server timeout",
+            error: "testLogin : MD server timeout",
         };
     };
     return response;

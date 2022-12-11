@@ -19,7 +19,7 @@ export const table = async (req, res) => {
 
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        return res.status(400).json(`Please insert auth header.`);
+        return res.status(400).json(`Please insert auth header`);
     };
 
     const meetURL = req.query.meetURL;
@@ -52,16 +52,16 @@ export const table = async (req, res) => {
                     const userDataResult = await DB.read(ID, PWD);
                     switch (userDataResult.code) {
                         case 0:
-                            throw new Error("Failed to read user data.");
+                            throw new Error("Failed to read user data");
                         case 1:
-                            res.status(200).json({ year: userDataResult.year, table: userDataResult.table });
+                            res.status(200).json({ year: userDataResult.year, table: userDataResult.table, updatedAt: userDataResult.updatedAt });
                             break;
                         case 2:
-                            throw new Error("User data not found.");
+                            throw new Error("User data not found");
                     };
                     break;
                 default:
-                    throw new Error(`meetURL must be boolean or "db".`);
+                    throw new Error(`meetURL must be boolean or "db"`);
             };
         }
         catch (error) {
@@ -69,6 +69,6 @@ export const table = async (req, res) => {
         };
     }
     catch (error) {
-        return res.status(403).json("Failed to verify, please login again.");
+        return res.status(403).json("Failed to verify, please login again");
     };
 };
