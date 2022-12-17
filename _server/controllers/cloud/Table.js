@@ -15,12 +15,12 @@ export const table = async (req, res) => {
     }
     else if (Object.keys(req.query).length > RequiredQuery.length) {
         return res.status(400).send(`Only allowed ${RequiredQuery.length} items in the body : [${RequiredQuery.join(", ")}]`);
-    };
+    }
 
     const authHeader = req.headers.authorization;
     if (!authHeader) {
         return res.status(400).json(`Please insert auth header`);
-    };
+    }
 
     const meetURL = req.query.meetURL;
 
@@ -32,23 +32,25 @@ export const table = async (req, res) => {
 
         try {
             switch (meetURL) {
-                case "true":
+                case "true": {
                     const slowTableData = await APItimeout35.slowTable(ID, PWD);
                     if (!slowTableData.error) {
                         return res.status(200).json({ year: slowTableData.year, table: slowTableData.table });
                     }
                     else {
                         throw new Error(slowTableData.error);
-                    };
-                case "false":
+                    }
+                }
+                case "false": {
                     const fastTableData = await APItimeout25.fastTable(ID, PWD);
                     if (!fastTableData.error) {
                         return res.status(200).json({ year: fastTableData.year, table: fastTableData.table });
                     }
                     else {
                         throw new Error(fastTableData.error);
-                    };
-                case "db":
+                    }
+                }
+                case "db": {
                     const userDataResult = await DB.read(ID, PWD);
                     switch (userDataResult.code) {
                         case 0:
@@ -58,17 +60,18 @@ export const table = async (req, res) => {
                             break;
                         case 2:
                             throw new Error("User data not found");
-                    };
+                    }
                     break;
+                }
                 default:
                     throw new Error(`meetURL must be boolean or "db"`);
-            };
+            }
         }
         catch (error) {
             return res.status(500).json(error.message);
-        };
+        }
     }
     catch (error) {
         return res.status(403).json("Failed to verify, please login again");
-    };
+    }
 };

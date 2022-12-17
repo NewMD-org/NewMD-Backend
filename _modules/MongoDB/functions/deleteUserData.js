@@ -14,8 +14,8 @@ export default async function deleteUserData(ID, PWD) {
         }
         else {
             return code;
-        };
+        }
     } catch (error) {
         return code;
-    };
+    }
 }

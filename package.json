@@ -9,7 +9,8 @@
     "type": "module",
     "scripts": {
         "dev": "node --trace-warnings ./app.js",
-        "start": "node ./app.js"
+        "start": "node ./app.js",
+        "lint": " npx eslint ./"
     },
     "author": "AAAA",
     "license": "MIT",
@@ -25,5 +26,8 @@
         "mongoose": "^6.4.6",
         "node-fetch": "^2.6.7",
         "node-schedule": "^2.1.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.30.0"
     }
 }

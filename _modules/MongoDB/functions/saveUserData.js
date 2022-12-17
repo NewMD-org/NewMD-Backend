@@ -28,9 +28,9 @@ export default async function storeUserData(ID, PWD, dataToSave) {
         }
         else {
             return code;
-        };
+        }
     }
     catch (error) {
         return code;
-    };
+    }
 }

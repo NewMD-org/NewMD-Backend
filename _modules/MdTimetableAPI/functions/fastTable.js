@@ -27,7 +27,7 @@ export async function fastTable(ID, PWD, timeout) {
         }
         else {
             throw new Error("fastTable : MD server error");
-        };
+        }
 
         let loginResponse = await fetch(
             "http://140.128.156.92/AACourses/Web/wLogin.php",
@@ -53,7 +53,7 @@ export async function fastTable(ID, PWD, timeout) {
         }
         else {
             throw new Error("fastTable : MD server error");
-        };
+        }
 
         let getTableResponse = await axios.request(
             {
@@ -69,6 +69,7 @@ export async function fastTable(ID, PWD, timeout) {
                     "cookie": loginResponse_cookie
                 },
                 "transformResponse": [data => {
+                    // eslint-disable-next-line no-undef
                     return iconv.decode(Buffer.from(data), "big5");
                 }]
             }
@@ -82,7 +83,7 @@ export async function fastTable(ID, PWD, timeout) {
                 $("#F_sPeriodsem option").each((i, option) => {
                     if (Object.keys($(option).attr()).includes("selected")) {
                         year = $(option).attr().value;
-                    };
+                    }
                 });
 
                 var table = {
@@ -346,13 +347,13 @@ export async function fastTable(ID, PWD, timeout) {
             }
             catch (error) {
                 throw new Error("fastTable : Error during getting table");
-            };
+            }
         }
         else {
             throw new Error("fastTable : MD server error");
-        };
+        }
     }
     catch (error) {
         throw new Error("fastTable : MD server error");
-    };
+    }
 }

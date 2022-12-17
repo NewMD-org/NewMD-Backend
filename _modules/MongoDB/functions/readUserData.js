@@ -30,7 +30,7 @@ export default async function readUserData(ID, PWD) {
                 updatedAt: null,
                 code: code,
             };
-        };
+        }
     }
     catch (error) {
         return {
@@ -39,5 +39,5 @@ export default async function readUserData(ID, PWD) {
             updatedAt: null,
             code: code,
         };
-    };
+    }
 }

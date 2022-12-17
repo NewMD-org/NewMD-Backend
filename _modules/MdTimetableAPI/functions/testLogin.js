@@ -10,6 +10,7 @@ export async function testLogin(ID, PWD, timeout) {
             {
                 timeout: timeout,
                 "transformResponse": [data => {
+                    // eslint-disable-next-line no-undef
                     return iconv.decode(Buffer.from(data), "big5");
                 }]
             }
@@ -31,7 +32,7 @@ export async function testLogin(ID, PWD, timeout) {
                 case "/crm/mess.asp?err_code=2":
                     status = 2;
                     break;
-            };
+            }
             response = {
                 status: status,
                 cookie: status == 0 ? loginResponse_cookie : "",
@@ -44,7 +45,7 @@ export async function testLogin(ID, PWD, timeout) {
                 cookie: null,
                 error: "testLogin : MD server error",
             };
-        };
+        }
     }
     catch (error) {
         response = {
@@ -52,6 +53,6 @@ export async function testLogin(ID, PWD, timeout) {
             cookie: null,
             error: "testLogin : MD server timeout",
         };
-    };
+    }
     return response;
 }

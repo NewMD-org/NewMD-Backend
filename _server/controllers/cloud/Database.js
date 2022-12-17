@@ -10,7 +10,7 @@ export const database = async (req, res) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
         return res.status(400).json(`Please insert auth header`);
-    };
+    }
 
     const params = req.params;
     try {
@@ -21,7 +21,7 @@ export const database = async (req, res) => {
 
         try {
             switch (params.action) {
-                case "save":
+                case "save": {
                     const dataToSave = await APItimeout35.slowTable(ID, PWD);
                     if (!dataToSave.error) {
                         const saveUserDataCode = await DB.save(ID, PWD, dataToSave);
@@ -34,13 +34,14 @@ export const database = async (req, res) => {
                             case 2:
                                 res.status(200).json("Successfully updated user data");
                                 break;
-                        };
+                        }
                     }
                     else {
                         throw new Error("Failed to store user data");
-                    };
+                    }
                     break;
-                case "read":
+                }
+                case "read": {
                     const userDataResult = await DB.read(ID, PWD);
                     switch (userDataResult.code) {
                         case 0:
@@ -50,9 +51,10 @@ export const database = async (req, res) => {
                             break;
                         case 2:
                             throw new Error("User data not found");
-                    };
+                    }
                     break;
-                case "delete":
+                }
+                case "delete": {
                     const code = await DB.delete(ID, PWD);
                     switch (code) {
                         case 0:
@@ -62,17 +64,18 @@ export const database = async (req, res) => {
                             break;
                         case 2:
                             throw new Error("User data not found");
-                    };
+                    }
                     break;
+                }
                 default:
                     throw new Error("Wrong param. only allowed [\"save\", \"read\", \"delete\"]");
-            };
+            }
         }
         catch (error) {
             return res.status(500).json(error.message);
-        };
+        }
     }
     catch (error) {
         return res.status(403).json("Failed to verify, please login again");
-    };
+    }
 };

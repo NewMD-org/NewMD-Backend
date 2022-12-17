@@ -11,7 +11,7 @@ export const viewvt = async (req, res) => {
     }
     else if (Object.keys(req.query).length > RequiredQuery.length) {
         return res.status(400).send(`Only allowed ${RequiredQuery.length} items in the body : [${RequiredQuery.join(", ")}]`);
-    };
+    }
 
     const year = req.query.year;
     const classID = req.query.classID;
@@ -21,5 +21,5 @@ export const viewvt = async (req, res) => {
     }
     catch (error) {
         return res.status(500).json(error.message);
-    };
+    }
 };
