@@ -1,5 +1,6 @@
 import schedule from "node-schedule";
 import MdTimetableAPI from "../../MdTimetableAPI/index.js";
+import ReadableTime from "../../ReadableTime/index.js";
 import { schema_userData } from "./mongo-schema.js";
 
 
@@ -75,11 +76,11 @@ export default async function scheduleUpdateData(taskFreq) {
             }
 
             const t01 = performance.now();
-            console.log(`Update user data : Loop ${loop} - finished (took ${Math.round(t01 - t00) / 1000} seconds)`);
+            console.log(`Update user data : Loop ${loop} - finished (took ${ReadableTime(Math.round(t01 - t00))["string"]})`);
         }
 
         const t1 = performance.now();
-        console.log(`Update user data : looped ${loop} times, finished ${finishUsers.length} users (took ${Math.round(t1 - t0) / 1000} seconds)`);
-        console.log("Update user data : unfinish users > " + unfinishUsers.filter(n => n).map(obj => obj["ID"]).join("\n") || "none");
+        console.log(`Update user data : looped ${loop} times, finished ${finishUsers.length} users (took ${ReadableTime(Math.round(t1 - t0))["string"]})`);
+        console.log("Update user data : unfinish users > " + (unfinishUsers.filter(n => n).map(obj => obj["ID"]).join(", ") || "none"));
     });
 }
