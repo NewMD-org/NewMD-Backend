@@ -3,12 +3,13 @@ import { login } from "../controllers/cloud/Login.js";
 import { table } from "../controllers/cloud/Table.js";
 import { database } from "../controllers/cloud/Database.js";
 import { viewvt } from "../controllers/cloud/ViewVT.js";
+import ReadableTime from "../../_modules/ReadableTime/index.js";
 
 
 const router = express.Router();
 
 router.get("/ping", (_, res) => {
-    res.status(200).json("Service is running");
+    res.status(200).json(`Service is up : ${ReadableTime(Math.round(performance.now()))["string"]}`);
 });
 
 router.post("/users/login", login);
