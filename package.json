@@ -22,7 +22,7 @@
         "dotenv": "^16.0.1",
         "express": "^4.17.2",
         "iconv-lite": "^0.4.24",
-        "jsonwebtoken": "^8.5.1",
+        "jsonwebtoken": "^9.0.0",
         "mongoose": "^6.4.6",
         "node-fetch": "^2.6.7",
         "node-schedule": "^2.1.0"
