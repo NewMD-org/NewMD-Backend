@@ -78,6 +78,10 @@ export async function fastTable(ID, PWD, timeout) {
             const $ = load(getTableResponse.data);
             const location = " > table > tbody > tr > td > span > div > div.";
 
+            if (!$("#UseInfo > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td.WB").text().includes("週課表")) {
+                throw new Error("fastTable : MD server error");
+            }
+
             try {
                 var year;
                 $("#F_sPeriodsem option").each((i, option) => {
