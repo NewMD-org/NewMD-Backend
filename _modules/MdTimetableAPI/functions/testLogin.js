@@ -23,7 +23,7 @@ export async function testLogin(ID, PWD, timeout) {
                 case "/CRM/mess.asp?err_code=3":
                     status = 0;
                     break;
-                case "/crm/index.asp":
+                case "/crm/index.asp?l=p":
                     status = 0;
                     break;
                 case "/crm/mess.asp?err_code=1":
