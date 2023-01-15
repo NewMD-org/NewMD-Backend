@@ -1,4 +1,6 @@
 import express from "express";
+import { readFileSync } from "fs";
+
 import { login } from "../controllers/cloud/Login.js";
 import { table } from "../controllers/cloud/Table.js";
 import { database } from "../controllers/cloud/Database.js";
@@ -7,9 +9,10 @@ import ReadableTime from "../../_modules/ReadableTime/index.js";
 
 
 const router = express.Router();
+const packageJSON = JSON.parse(readFileSync("./package.json"));
 
 router.get("/ping", (_, res) => {
-    res.status(200).json(`Service is up : ${ReadableTime(Math.round(performance.now()))["string"]}`);
+    res.status(200).json(`Service is up : ${ReadableTime(Math.round(performance.now()))["string"]} | API v${packageJSON.version}`);
 });
 
 router.post("/users/login", login);
