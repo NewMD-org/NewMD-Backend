@@ -2,6 +2,7 @@ import { testLogin } from "./functions/testLogin.js";
 import { fastTable } from "./functions/fastTable.js";
 import { slowTable } from "./functions/slowTable.js";
 import { viewVT } from "./functions/viewVT.js";
+import { getWeekList } from "./functions/getWeekList.js";
 
 
 export default class MdTimetableAPI {
@@ -24,5 +25,9 @@ export default class MdTimetableAPI {
     viewVT(year, classID) {
         var cache = {};
         return viewVT(year, classID, cache, this.timeout);
+    }
+
+    getWeekList(year) {
+        return getWeekList(year, this.timeout);
     }
 }

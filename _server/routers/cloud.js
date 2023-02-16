@@ -1,11 +1,12 @@
 import express from "express";
 import { readFileSync } from "fs";
 
+import ReadableTime from "../../_modules/ReadableTime/index.js";
 import { login } from "../controllers/cloud/Login.js";
 import { table } from "../controllers/cloud/Table.js";
 import { database } from "../controllers/cloud/Database.js";
 import { viewvt } from "../controllers/cloud/ViewVT.js";
-import ReadableTime from "../../_modules/ReadableTime/index.js";
+import { getweeklist } from "../controllers/cloud/GetWeekList.js";
 
 
 const router = express.Router();
@@ -22,6 +23,8 @@ router.get("/table", table);
 router.get("/viewvt", viewvt);
 
 router.get("/database/:action?", database);
+
+router.get("/getweeklist", getweeklist);
 
 router.get("/*", (_, res) => {
     res.status(400).json("Please insert correct path");
