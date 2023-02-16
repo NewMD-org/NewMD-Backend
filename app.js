@@ -10,6 +10,7 @@ const host = process.env.HOST || "localhost";
 const port = process.env.PORT || 3000;
 
 try {
+    mongoose.set("strictQuery", false);
     const db = await mongoose.connect(process.env.MONGO_URI, { keepAlive: true });
     console.log(`Server : successfully connected to MongoDB, Database name: "${db.connections[0].name}"`);
     server.set("port", port);

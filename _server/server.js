@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import axios from "axios";
+import { rateLimit } from "express-rate-limit";
+
 import router from "./routers/cloud.js";
 
 
@@ -13,6 +15,26 @@ const defaultCors = {
         "https://newmd.eu.org"
     ]
 };
+
+const limiter = rateLimit({
+    windowMs: 5 * 60 * 1000,
+    max: 100,
+    message: "Too many requests, please try again later!"
+});
+
+const cloud = express();
+cloud.use(cors(await getCorsConfig()));
+cloud.use(bodyParser.urlencoded({ extended: true }));
+cloud.use(bodyParser.json());
+cloud.use("/", router);
+
+const app = express();
+app.set("trust proxy", 1);
+app.use(limiter);
+app.use("/", cloud);
+
+export default app;
+
 
 async function getCorsConfig() {
     const t0 = performance.now();
@@ -32,14 +54,3 @@ async function getCorsConfig() {
 
     return cors;
 }
-
-const cloud = express();
-cloud.use(cors(await getCorsConfig()));
-cloud.use(bodyParser.urlencoded({ extended: true }));
-cloud.use(bodyParser.json());
-cloud.use("/", router);
-
-const app = express();
-app.use("/", cloud);
-
-export default app;
