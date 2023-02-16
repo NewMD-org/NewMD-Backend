@@ -1,5 +1,5 @@
 {
-    "name": "mdtimetableapi",
+    "name": "newmd-backend",
     "version": "1.1.0",
     "description": "An api for mingdao's potato server.",
     "main": "app.js",
@@ -21,6 +21,7 @@
         "cors": "^2.8.5",
         "dotenv": "^16.0.1",
         "express": "^4.17.2",
+        "express-rate-limit": "^6.7.0",
         "fs": "^0.0.1-security",
         "iconv-lite": "^0.4.24",
         "jsonwebtoken": "^9.0.0",

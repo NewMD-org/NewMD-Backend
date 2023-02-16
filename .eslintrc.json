@@ -20,6 +20,10 @@
             {
                 "SwitchCase": 1
             }
+        ],
+        "quotes": [
+            "error",
+            "double"
         ]
     }
 }
