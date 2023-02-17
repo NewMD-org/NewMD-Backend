@@ -9,7 +9,7 @@ const APItimeout35 = new MdTimetableAPI(35);
 export const database = async (req, res) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        return res.status(400).json(`Please insert auth header`);
+        return res.status(400).json("Please insert auth header");
     }
 
     const params = req.params;
@@ -47,7 +47,7 @@ export const database = async (req, res) => {
                         case 0:
                             throw new Error("Failed to read user data");
                         case 1:
-                            res.status(200).json({ year: userDataResult.year, table: userDataResult.table, updatedAt: userDataResult.updatedAt });
+                            res.status(200).json(userDataResult);
                             break;
                         case 2:
                             throw new Error("User data not found");

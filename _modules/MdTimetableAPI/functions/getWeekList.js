@@ -9,7 +9,7 @@ export async function getWeekList(year, timeout) {
             `http://140.128.156.92/AACourses/includes/ajax_fun.php?&F_sPeriodsem=${year}&Qtype=getWeekList`,
             {
                 timeout: (timeout ? timeout : 20 * 1000),
-                responseType: 'arraybuffer',
+                responseType: "arraybuffer",
                 "transformResponse": [data => {
                     // eslint-disable-next-line no-undef
                     return iconv.decode(Buffer.from(data), "big5");

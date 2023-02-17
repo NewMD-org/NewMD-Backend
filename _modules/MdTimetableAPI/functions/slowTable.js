@@ -61,7 +61,7 @@ export async function slowTable(ID, PWD, timeout) {
                 timeout: timeout,
                 "responseType": "arraybuffer",
                 "method": "GET",
-                "url": `http://140.128.156.92/AACourses/Web/qWTT.php`,
+                "url": "http://140.128.156.92/AACourses/Web/qWTT.php",
                 "headers": {
                     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                     "accept-language": "zh-TW,zh;q=0.9",
@@ -90,6 +90,10 @@ export async function slowTable(ID, PWD, timeout) {
                         year = $(option).attr().value;
                     }
                 });
+
+                var grade = $("#qClass").attr().value;
+
+                var selectedWeek = Number($("head > script:nth-child(19)").html().match(/'getWeekList','(.*?)'\);/)[1]);
 
                 var cache = {};
                 var table = {
@@ -442,9 +446,13 @@ export async function slowTable(ID, PWD, timeout) {
                         },
                     },
                 };
+
                 return {
                     year,
-                    table
+                    grade,
+                    selectedWeek,
+                    table,
+                    cookie: loginResponse_cookie
                 };
             }
             catch (error) {
@@ -456,8 +464,6 @@ export async function slowTable(ID, PWD, timeout) {
         }
     }
     catch (error) {
-        return {
-            error: error.message
-        };
+        throw new Error("slowTable : MD server error");
     }
 }
