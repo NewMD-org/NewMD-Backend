@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import axios from "axios";
+import morgan from "morgan";
 import { rateLimit } from "express-rate-limit";
 
 import router from "./routers/cloud.js";
@@ -23,6 +24,7 @@ const limiter = rateLimit({
 });
 
 const cloud = express();
+cloud.use(morgan("combined"));
 cloud.use(cors(await getCorsConfig()));
 cloud.use(bodyParser.urlencoded({ extended: true }));
 cloud.use(bodyParser.json());
@@ -39,7 +41,7 @@ export default app;
 async function getCorsConfig() {
     const t0 = performance.now();
 
-    var cors = defaultCors;
+    let cors = defaultCors;
 
     try {
         const response = await axios.get("https://raw.githubusercontent.com/NewMD-org/Configurations/main/Backend/cors.json");
