@@ -19,6 +19,6 @@ export const getweeklist = async (req, res) => {
         return res.status(200).json(await APItimeout5.getWeekList(year));
     }
     catch (error) {
-        return res.status(500).json(error.message.replace("getWeekList : ", ""));
+        return res.status(500).json({ message: error.message });
     }
 };

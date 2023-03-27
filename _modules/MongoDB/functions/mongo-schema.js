@@ -7,6 +7,8 @@ const userData = new Schema({
     userID: String,
     userPassword: String,
     year: String,
+    grade: String,
+    selectedWeek: Number,
     table: Object,
     updatedAt: { type: Date, default: Date.now },
 });

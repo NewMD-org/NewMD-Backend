@@ -26,70 +26,57 @@ export const login = async (req, res) => {
     const PWD = req.body.PWD;
     const rememberMe = req.body.rememberMe;
 
-    try {
-        const loginResult = await APItimeout5.login(ID, PWD);
-        const userDataResult = await DB.read(ID, PWD);
+    if (rememberMe !== "true" && rememberMe !== "false") {
+        return res.status(400).json({ message: "RememberMe must be boolean" });
+    }
 
-        let userDataStatus;
-        switch (userDataResult.code) {
-            case 0:
-                userDataStatus = null;
-                break;
-            case 1:
-                userDataStatus = true;
-                break;
-            case 2:
-                userDataStatus = false;
-                break;
-            default:
-                userDataStatus = null;
-                break;
+    try {
+        let userDataStatus = false;
+        try {
+            await DB.read(ID, PWD);
+            userDataStatus = true;
+        } catch (error) {
+            userDataStatus = false;
         }
+
+        const loginResult = await APItimeout5.login(ID, PWD);
         switch (loginResult.status) {
-            case 0:
+            case 0: {
                 if (rememberMe == "true") {
                     const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "true" }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
-                    res.status(200).set("Authorization", JWTtoken).json({   
-                        error: null,
+                    return res.status(200).set("Authorization", JWTtoken).json({
                         userDataStatus
                     });
                 }
                 else if (rememberMe == "false") {
                     const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "false" }, process.env.JWT_SECRETKEY, { expiresIn: "10 mins" });
-                    res.status(200).set("Authorization", JWTtoken).json({
-                        error: null,
-                        userDataStatus,
+                    return res.status(200).set("Authorization", JWTtoken).json({
+                        userDataStatus
                     });
                 }
-                else {
-                    res.status(400).json("rememberMe must be boolean");
-                }
                 break;
+            }
             case 1:
-                res.status(401).json("Incorrect account or password");
-                break;
-            case 2:
-                res.status(401).json("Incorrect account or password");
-                break;
-            case 3:
+            case 2: {
+                return res.status(401).json({ message: "Incorrect account or password" });
+            }
+            case 3: {
                 if (rememberMe == "true") {
                     const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "true" }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
-                    res.status(200).set("Authorization", JWTtoken).json({
-                        error: loginResult.error,
+                    return res.status(200).set("Authorization", JWTtoken).json({
+                        message: loginResult.message,
                         userDataStatus
                     });
                 }
                 else if (rememberMe == "false") {
                     const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "false" }, process.env.JWT_SECRETKEY, { expiresIn: "10 mins" });
-                    res.status(200).set("Authorization", JWTtoken).json({
-                        error: loginResult.error,
-                        userDataStatus,
+                    return res.status(200).set("Authorization", JWTtoken).json({
+                        message: loginResult.message,
+                        userDataStatus
                     });
                 }
-                else {
-                    res.status(400).json("rememberMe must be boolean");
-                }
                 break;
+            }
         }
     } catch (error) {
         console.log(error);

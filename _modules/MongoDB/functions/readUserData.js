@@ -2,42 +2,19 @@ import { schema_userData } from "./mongo-schema.js";
 
 
 export default async function readUserData(ID, PWD) {
-    let code = 0;
     try {
         const data = await schema_userData.findOne({ userID: ID, userPassword: PWD }).exec();
         if (data == null) {
-            code = 2;
-            return {
-                year: null,
-                table: null,
-                updatedAt: data.updatedAt,
-                code: code,
-            };
+            throw new Error("User data not found");
         }
         else if (data.userID == ID) {
-            code = 1;
-            return {
-                year: data.year,
-                table: data.table,
-                updatedAt: data.updatedAt,
-                code: code,
-            };
+            return data;
         }
         else {
-            return {
-                year: null,
-                table: null,
-                updatedAt: null,
-                code: code,
-            };
+            throw new Error("Failed to read user data");
         }
     }
     catch (error) {
-        return {
-            year: null,
-            table: null,
-            updatedAt: null,
-            code: code,
-        };
+        throw new Error(error.message);
     }
 }

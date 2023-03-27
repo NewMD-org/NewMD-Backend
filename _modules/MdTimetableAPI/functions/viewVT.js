@@ -6,9 +6,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export async function viewVT(year, classID, cache, timeout, sleepTime) {
-    sleepTime || 5000;
-
+export async function viewVT(year, classID, cache, timeout, sleepTime = 5000) {
     await sleep(sleepTime);
 
     if (Object.keys(cache).includes(classID)) {
@@ -35,7 +33,7 @@ export async function viewVT(year, classID, cache, timeout, sleepTime) {
                 throw new Error("viewVT : MD server error");
             }
         } catch (error) {
-            throw new Error("viewVT : MD server error");
+            throw new Error(error.message);
         }
     }
 }
