@@ -3,7 +3,6 @@ import iconv from "iconv-lite";
 
 
 export async function testLogin(ID, PWD, timeout) {
-    var response = {};
     try {
         const loginResponse = await axios.get(
             `http://140.128.156.40/crm/login.asp?user_id=${ID}&user_password=${PWD}`,
@@ -33,26 +32,22 @@ export async function testLogin(ID, PWD, timeout) {
                     status = 2;
                     break;
             }
-            response = {
+            return {
                 status: status,
-                cookie: status == 0 ? loginResponse_cookie : "",
-                error: null,
+                cookie: status == 0 ? loginResponse_cookie : ""
             };
         }
         else {
-            response = {
+            return {
                 status: 3,
-                cookie: null,
-                error: "testLogin : MD server error",
+                message: "testLogin : MD server error"
             };
         }
     }
     catch (error) {
-        response = {
+        return {
             status: 3,
-            cookie: null,
-            error: "testLogin : MD server timeout",
+            massage: "testLogin : MD server timeout"
         };
     }
-    return response;
 }

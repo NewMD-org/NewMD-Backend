@@ -2,7 +2,7 @@ import { schema_userData } from "./mongo-schema.js";
 
 
 export default async function storeUserData(ID, PWD, dataToSave) {
-    let code = 0;
+    console.log(dataToSave);
     try {
         const data = await schema_userData.findOne({ userID: ID, userPassword: PWD }).exec();
         if (data == null) {
@@ -10,27 +10,31 @@ export default async function storeUserData(ID, PWD, dataToSave) {
                 userID: ID,
                 userPassword: PWD,
                 year: dataToSave["year"],
+                grade: dataToSave["grade"],
+                selectedWeek: dataToSave["selectedWeek"],
                 table: dataToSave["table"],
                 updatedAt: new Date()
             }).save();
-            return code = 1;
+            return 0;
         }
         else if (data.userID == ID) {
             await schema_userData.findOneAndUpdate(
                 { userID: ID, userPassword: PWD },
                 {
                     year: dataToSave["year"],
+                    grade: dataToSave["grade"],
+                    selectedWeek: dataToSave["selectedWeek"],
                     table: dataToSave["table"],
                     updatedAt: new Date()
                 }
             );
-            return code = 2;
+            return 1;
         }
         else {
-            return code;
+            throw new Error("Failed to authorize");
         }
     }
     catch (error) {
-        return code;
+        throw new Error(error.message);
     }
 }

@@ -20,6 +20,6 @@ export const viewvt = async (req, res) => {
         return res.status(200).json(await APItimeout10.viewVT(year, classID));
     }
     catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).json({ message: error.message });
     }
 };

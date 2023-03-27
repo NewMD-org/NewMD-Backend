@@ -2,20 +2,19 @@ import { schema_userData } from "./mongo-schema.js";
 
 
 export default async function deleteUserData(ID, PWD) {
-    let code = 0;
     try {
         const data = await schema_userData.findOne({ userID: ID, userPassword: PWD }).exec();
         if (data == null) {
-            return code = 2;
+            throw new Error("User data not found");
         }
         else if (data.userID == ID) {
             await schema_userData.findOneAndDelete({ userID: ID, userPassword: PWD });
-            return code = 1;
+            return 1;
         }
         else {
-            return code;
+            throw new Error("Failed to delete user data");
         }
     } catch (error) {
-        return code;
+        throw new Error(error.message);
     }
 }

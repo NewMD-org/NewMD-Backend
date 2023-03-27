@@ -19,7 +19,7 @@ export async function getWeekList(year, timeout) {
         if (response.status === 200) {
             const $ = load(response.data);
             if (!$("body").text().includes("|")) {
-                throw new Error("getWeekList : week list not found");
+                throw new Error("Week list not found");
             } else {
                 const listObj = {};
                 const listArr = $("body").text().replace(/\|第.*?週 :/g, "").split(",").map(ele => [ele.split(" ")[0], ele.split(" ")[1]]);
@@ -30,10 +30,10 @@ export async function getWeekList(year, timeout) {
             }
         }
         else {
-            throw new Error("getWeekList : MD server error");
+            throw new Error("MD server error");
         }
     }
     catch (error) {
-        throw new Error(error);
+        throw new Error(error.message);
     }
 }

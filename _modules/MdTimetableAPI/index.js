@@ -23,7 +23,7 @@ export default class MdTimetableAPI {
     }
 
     viewVT(year, classID) {
-        var cache = {};
+        let cache = {};
         return viewVT(year, classID, cache, this.timeout);
     }
 

@@ -13,13 +13,13 @@ function sleep(ms) {
 export default async function scheduleUpdateData(taskFreq) {
     console.log(`Update user data : scheduled update user data. Task frequency: " ${taskFreq} "`);
     schedule.scheduleJob(taskFreq, async () => {
-        console.log(`Update user data : start`);
+        console.log("Update user data : start");
 
         const t0 = performance.now();
         const finishUsers = [];
         const unfinishUsers = [];
         const loopLimit = 10;
-        var loop = 0;
+        let loop = 0;
 
         const data = await schema_userData.find({});
         data.forEach((obj) => {
@@ -37,7 +37,7 @@ export default async function scheduleUpdateData(taskFreq) {
             const t00 = performance.now();
             const length = unfinishUsers.length;
 
-            for (var i = 0; i < length; i++) {
+            for (let i = 0; i < length; i++) {
                 if (unfinishUsers[i] === null) continue;
                 const ID = unfinishUsers[i].ID;
                 const PWD = unfinishUsers[i].PWD;
@@ -46,23 +46,21 @@ export default async function scheduleUpdateData(taskFreq) {
                 console.log(`Update user data : user ${ID} - start`);
                 try {
                     const slowTableData = await APItimeout60.slowTable(ID, PWD);
-                    if (!slowTableData.error) {
-                        await schema_userData.findOneAndUpdate(
-                            { userID: ID, userPassword: PWD },
-                            {
-                                year: slowTableData["year"],
-                                table: slowTableData["table"]
-                            }
-                        );
-                        finishUsers.push({
-                            ID,
-                            PWD
-                        });
-                        console.log(`Update user data : user ${ID} - success`);
-                    }
-                    else {
-                        throw new Error(slowTableData.error);
-                    }
+                    await schema_userData.findOneAndUpdate(
+                        { userID: ID, userPassword: PWD },
+                        {
+                            year: slowTableData["year"],
+                            grade: slowTableData["grade"],
+                            selectedWeek: slowTableData["selectedWeek"],
+                            table: slowTableData["table"],
+                            updatedAt: new Date()
+                        }
+                    );
+                    finishUsers.push({
+                        ID,
+                        PWD
+                    });
+                    console.log(`Update user data : user ${ID} - success`);
                 }
                 catch (error) {
                     unfinishUsers.push({
