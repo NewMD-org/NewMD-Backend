@@ -32,7 +32,7 @@ export const table = async (req, res) => {
             case "true": {
                 const slowTableData = await APItimeout35.slowTable(ID, PWD);
                 try {
-                    return res.status(200).json({ year: slowTableData.year, table: slowTableData.table });
+                    return res.status(200).json(slowTableData);
                 } catch (error) {
                     return res.status(500).json(error.message.replace("slowTable : ", ""));
                 }
