@@ -1,61 +1,46 @@
-import axios from "axios";
-import iconv from "iconv-lite";
+import fetch from "node-fetch";
 
 
 export async function testLogin(ID, PWD, timeout) {
     try {
-        const loginResponse = await axios.get(
-            `http://140.128.156.40/crm/login.asp?user_id=${ID}&user_password=${PWD}`,
+        const firstResponse = await fetch(
+            "http://140.128.156.92/AACourses/Web/wLogin.php",
             {
                 timeout: timeout,
-                "transformResponse": [data => {
-                    // eslint-disable-next-line no-undef
-                    return iconv.decode(Buffer.from(data), "big5");
-                }]
+                "method": "GET"
             }
         );
-        const loginResponse_cookie = loginResponse.headers["set-cookie"].toString().split(";")[0];
-        if (loginResponse.status == 200) {
-            const path = loginResponse.request.path.split("&")[0];
-            let status;
-            console.log(path);
-            switch (path) {
-                case "/CRM/mess.asp?err_code=3": {
-                    status = 0;
-                    break;
-                }
-                case "/crm/index.asp?l=p": {
-                    status = 0;
-                    break;
-                }
-                case "/crm/mess.asp?err_code=1": {
-                    status = 1;
-                    break;
-                }
-                case "/crm/mess.asp?err_code=2": {
-                    status = 2;
-                    break;
-                }
-                default: {
-                    throw new Error("Unexpected response from MD");
-                }
-            }
-            return {
-                status: status,
-                cookie: status == 0 ? loginResponse_cookie : ""
-            };
+        let firstResponse_setCookie = Object.getOwnPropertySymbols(firstResponse).map(item => firstResponse[item])[1].headers.get("set-cookie");
+        let firstResponse_cookie;
+        if (firstResponse.status == 200) {
+            firstResponse_cookie = firstResponse_setCookie.split(";")[0];
         }
         else {
-            return {
-                status: 3,
-                message: "testLogin : MD server error"
-            };
+            console.log("er");
+            return 0;
+        }
+
+        const loginResponse = await fetch(
+            "http://140.128.156.92/AACourses/Web/wLogin.php",
+            {
+                timeout: timeout,
+                headers: {
+                    "content-type": "application/x-www-form-urlencoded",
+                    "cookie": firstResponse_cookie
+                },
+                body: `sureReg=YES&goURL=qWTT.php&accessWay=ACCOUNT&wRole=STD&stdID=${ID}&stdPWD=${PWD}`,
+                method: "POST"
+            }
+        );
+        if (loginResponse.url === "http://140.128.156.92/AACourses/Web/qWTT.php") {
+            return 1;
+        }
+        else {
+            return 2;
         }
     }
     catch (error) {
-        return {
-            status: 3,
-            massage: "testLogin : MD server timeout"
-        };
+        console.log(error);
+        return 0;
     }
 }

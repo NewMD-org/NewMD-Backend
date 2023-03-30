@@ -4,7 +4,7 @@ import MongoDB from "../../../_modules/MongoDB/index.js";
 
 
 const DB = new MongoDB();
-const APItimeout5 = new MdTimetableAPI(5);
+const APItimeout15 = new MdTimetableAPI(15);
 
 export const login = async (req, res) => {
     const RequiredBody = ["ID", "PWD", "rememberMe"];
@@ -39,43 +39,25 @@ export const login = async (req, res) => {
             userDataStatus = false;
         }
 
-        const loginResult = await APItimeout5.login(ID, PWD);
-        switch (loginResult.status) {
-            case 0: {
-                if (rememberMe == "true") {
-                    const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "true" }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
-                    return res.status(200).set("Authorization", JWTtoken).json({
-                        userDataStatus
-                    });
-                }
-                else if (rememberMe == "false") {
-                    const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "false" }, process.env.JWT_SECRETKEY, { expiresIn: "10 mins" });
-                    return res.status(200).set("Authorization", JWTtoken).json({
-                        userDataStatus
-                    });
-                }
-                break;
+        const loginResult = await APItimeout15.login(ID, PWD);
+        console.log(loginResult);
+        if (loginResult == 2) {
+            return res.status(401).json({ message: "Incorrect account or password" });
+        }
+        else {
+            if (rememberMe == "true") {
+                const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "true" }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
+                return res.status(200).set("Authorization", JWTtoken).json({
+                    message: loginResult ? "Success" : "MD server error",
+                    userDataStatus
+                });
             }
-            case 1:
-            case 2: {
-                return res.status(401).json({ message: "Incorrect account or password" });
-            }
-            case 3: {
-                if (rememberMe == "true") {
-                    const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "true" }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
-                    return res.status(200).set("Authorization", JWTtoken).json({
-                        message: loginResult.message,
-                        userDataStatus
-                    });
-                }
-                else if (rememberMe == "false") {
-                    const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "false" }, process.env.JWT_SECRETKEY, { expiresIn: "10 mins" });
-                    return res.status(200).set("Authorization", JWTtoken).json({
-                        message: loginResult.message,
-                        userDataStatus
-                    });
-                }
-                break;
+            else if (rememberMe == "false") {
+                const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "false" }, process.env.JWT_SECRETKEY, { expiresIn: "10 mins" });
+                return res.status(200).set("Authorization", JWTtoken).json({
+                    message: loginResult ? "Success" : "MD server error",
+                    userDataStatus
+                });
             }
         }
     } catch (error) {
