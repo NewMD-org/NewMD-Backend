@@ -18,19 +18,27 @@ export async function testLogin(ID, PWD, timeout) {
         if (loginResponse.status == 200) {
             const path = loginResponse.request.path.split("&")[0];
             let status;
+            console.log(path);
             switch (path) {
-                case "/CRM/mess.asp?err_code=3":
+                case "/CRM/mess.asp?err_code=3": {
                     status = 0;
                     break;
-                case "/crm/index.asp?l=p":
+                }
+                case "/crm/index.asp?l=p": {
                     status = 0;
                     break;
-                case "/crm/mess.asp?err_code=1":
+                }
+                case "/crm/mess.asp?err_code=1": {
                     status = 1;
                     break;
-                case "/crm/mess.asp?err_code=2":
+                }
+                case "/crm/mess.asp?err_code=2": {
                     status = 2;
                     break;
+                }
+                default: {
+                    throw new Error("Unexpected response from MD");
+                }
             }
             return {
                 status: status,
