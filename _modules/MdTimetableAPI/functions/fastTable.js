@@ -6,17 +6,10 @@ import { load } from "cheerio";
 
 export async function fastTable(ID, PWD, timeout) {
     try {
-        let firstResponse = await fetch(
+        const firstResponse = await fetch(
             "http://140.128.156.92/AACourses/Web/wLogin.php",
             {
                 timeout: timeout,
-                "headers": {
-                    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-                    "accept-language": "zh-TW,zh;q=0.9",
-                    "upgrade-insecure-requests": "1"
-                },
-                "referrerPolicy": "strict-origin-when-cross-origin",
-                "body": null,
                 "method": "GET"
             }
         );
@@ -29,33 +22,27 @@ export async function fastTable(ID, PWD, timeout) {
             throw new Error("fastTable : MD server error");
         }
 
-        let loginResponse = await fetch(
+        const loginResponse = await fetch(
             "http://140.128.156.92/AACourses/Web/wLogin.php",
             {
                 timeout: timeout,
-                "headers": {
-                    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-                    "accept-language": "zh-TW,zh;q=0.9",
-                    "cache-control": "max-age=0",
+                headers: {
                     "content-type": "application/x-www-form-urlencoded",
-                    "upgrade-insecure-requests": "1",
-                    "cookie": firstResponse_cookie,
-                    "Referer": "http://140.128.156.92/AACourses/Web/wLogin.php",
-                    "Referrer-Policy": "strict-origin-when-cross-origin"
+                    "cookie": firstResponse_cookie
                 },
-                "body": `sureReg=YES&goURL=qWTT.php&accessWay=ACCOUNT&HTTP_REFERER=&wRole=STD&stdID=${ID}&stdPWD=${PWD}&uRFID=&Submit=%BDT%A9w%B5n%A4J`,
-                "method": "POST"
+                body: `sureReg=YES&goURL=qWTT.php&accessWay=ACCOUNT&wRole=STD&stdID=${ID}&stdPWD=${PWD}`,
+                method: "POST"
             }
         );
         let loginResponse_cookie;
-        if (loginResponse.status == 200) {
+        if (loginResponse.url === "http://140.128.156.92/AACourses/Web/qWTT.php") {
             loginResponse_cookie = firstResponse_cookie;
         }
         else {
             throw new Error("fastTable : MD server error");
         }
 
-        let getTableResponse = await axios.request(
+        const getTableResponse = await axios.request(
             {
                 timeout: timeout,
                 "responseType": "arraybuffer",
@@ -83,18 +70,18 @@ export async function fastTable(ID, PWD, timeout) {
             }
 
             try {
-                var year;
+                let year;
                 $("#F_sPeriodsem option").each((i, option) => {
                     if (Object.keys($(option).attr()).includes("selected")) {
                         year = $(option).attr().value;
                     }
                 });
 
-                var grade = $("#qClass").attr().value;
+                let grade = $("#qClass").attr().value;
 
-                var selectedWeek = Number($("head > script:nth-child(19)").html().match(/'getWeekList','(.*?)'\);/)[1]);
+                let selectedWeek = Number($("head > script:nth-child(19)").html().match(/'getWeekList','(.*?)'\);/)[1]);
 
-                var table = {
+                let table = {
                     day1: {
                         1: {
                             classname: $(`#F_1_1${location}subj`).html() ? $(`#F_1_1${location}subj`).html() : "",
