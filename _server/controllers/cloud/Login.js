@@ -31,32 +31,30 @@ export const login = async (req, res) => {
     }
 
     try {
-        let userDataStatus = false;
+        const JWTtoken = jwt.sign(
+            {
+                userID: ID,
+                userPWD: PWD,
+                rememberMe: "true"
+            },
+            process.env.JWT_SECRETKEY,
+            { expiresIn: rememberMe == "true" ? "7 days" : "10 mins" }
+        );
+
         try {
             await DB.read(ID, PWD);
-            userDataStatus = true;
+            return res.status(200).set("Authorization", JWTtoken).json({
+                userDataStatus: true
+            });
         } catch (error) {
-            userDataStatus = false;
-        }
-
-        const loginResult = await APItimeout15.login(ID, PWD);
-        console.log(loginResult);
-        if (loginResult == 2) {
-            return res.status(401).json({ message: "Incorrect account or password" });
-        }
-        else {
-            if (rememberMe == "true") {
-                const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "true" }, process.env.JWT_SECRETKEY, { expiresIn: "7 days" });
-                return res.status(200).set("Authorization", JWTtoken).json({
-                    message: loginResult ? "Success" : "MD server error",
-                    userDataStatus
-                });
+            const loginResult = await APItimeout15.login(ID, PWD);
+            if (loginResult == 2) {
+                return res.status(401).json({ message: "Incorrect account or password" });
             }
-            else if (rememberMe == "false") {
-                const JWTtoken = jwt.sign({ userID: ID, userPWD: PWD, rememberMe: "false" }, process.env.JWT_SECRETKEY, { expiresIn: "10 mins" });
+            else {
                 return res.status(200).set("Authorization", JWTtoken).json({
                     message: loginResult ? "Success" : "MD server error",
-                    userDataStatus
+                    userDataStatus: false
                 });
             }
         }
