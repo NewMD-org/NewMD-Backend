@@ -30,16 +30,16 @@ export const table = async (req, res) => {
 
         switch (meetURL) {
             case "true": {
-                const slowTableData = await APItimeout35.slowTable(ID, PWD);
                 try {
+                    const slowTableData = await APItimeout35.slowTable(ID, PWD);
                     return res.status(200).json(slowTableData);
                 } catch (error) {
                     return res.status(500).json(error.message.replace("slowTable : ", ""));
                 }
             }
             case "false": {
-                const fastTableData = await APItimeout25.fastTable(ID, PWD);
                 try {
+                    const fastTableData = await APItimeout25.fastTable(ID, PWD);
                     return res.status(200).json(fastTableData);
                 } catch (error) {
                     return res.status(500).json(error.message.replace("fastTable : ", ""));

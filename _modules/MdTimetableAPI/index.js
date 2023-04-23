@@ -22,9 +22,9 @@ export default class MdTimetableAPI {
         return slowTable(ID, PWD, this.timeout);
     }
 
-    viewVT(year, classID) {
+    viewVT(year, classID, sleepTime) {
         let cache = {};
-        return viewVT(year, classID, cache, this.timeout);
+        return viewVT(year, classID, cache, this.timeout, sleepTime);
     }
 
     getWeekList(year) {

@@ -15,7 +15,7 @@ try {
     console.log(`Server : successfully connected to MongoDB, Database name: "${db.connections[0].name}"`);
     server.set("port", port);
     server.set("host", host);
-    var app = server.listen(server.get("port"), server.get("host"), err => {
+    let app = server.listen(server.get("port"), server.get("host"), err => {
         if (err) throw err;
         console.error(`Server : listening on ${host}:${app.address().port}`);
         new MongoDB().scheduleUpdate("00 00 00 * * *");

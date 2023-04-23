@@ -26,7 +26,11 @@ const limiter_1m_20req = rateLimit({
 });
 
 router.get("/ping", (_, res) => {
-    res.status(200).json(`Service is up : ${ReadableTime(Math.round(performance.now()))["string"]} | API v${packageJSON.version}`);
+    res.status(200).json({
+        "service": "up",
+        "uptime": ReadableTime(Math.round(performance.now()))["string"],
+        "api": `v${packageJSON.version}`,
+    });
 });
 
 router.use("/users/login", limiter_1m_10req);
