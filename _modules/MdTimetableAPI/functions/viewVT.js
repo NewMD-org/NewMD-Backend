@@ -6,7 +6,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export async function viewVT(year, classID, cache, timeout, sleepTime = 5000) {
+export async function viewVT(year, classID, cache, timeout, sleepTime = 1000) {
     await sleep(sleepTime);
 
     if (Object.keys(cache).includes(classID)) {
@@ -17,7 +17,7 @@ export async function viewVT(year, classID, cache, timeout, sleepTime = 5000) {
             const response = await axios.get(
                 `http://140.128.156.92/AACourses/Web/qVT.php?F_sPeriodsem=${year}&eID=${classID}`,
                 {
-                    timeout: (timeout ? timeout : 20 * 1000)
+                    timeout: (timeout ?? 20 * 1000)
                 }
             );
             if (response.status === 200) {

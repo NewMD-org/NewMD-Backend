@@ -17,7 +17,7 @@ export const viewvt = async (req, res) => {
     const classID = req.query.classID;
 
     try {
-        return res.status(200).json(await APItimeout10.viewVT(year, classID));
+        return res.status(200).json(await APItimeout10.viewVT(year, classID, 0));
     }
     catch (error) {
         return res.status(500).json({ message: error.message });
