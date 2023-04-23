@@ -24,7 +24,7 @@ export async function viewVT(year, classID, cache, timeout, sleepTime = 5000) {
                 const $ = load(response.data);
                 const obj = {
                     meet: $("#main > div:nth-child(3) > a").html() ? $("#main > div:nth-child(3) > a").html().replace(/ /g, "").substring(0, 36) : "",
-                    classroom: $("#main > div:nth-child(5)").html() ? $("#main > div:nth-child(5)").html() : ""
+                    classroom: $("#main > div:nth-child(5)").html() || ""
                 };
                 cache[classID] = obj;
                 return obj;
