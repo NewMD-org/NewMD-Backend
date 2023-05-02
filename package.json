@@ -1,6 +1,6 @@
 {
     "name": "newmd-backend",
-    "version": "1.4.0",
+    "version": "1.4.2",
     "description": "An api for mingdao's potato server.",
     "main": "app.js",
     "engines": {
@@ -16,15 +16,15 @@
     "author": "AAAA",
     "license": "MIT",
     "dependencies": {
-        "axios": "^0.25.0",
+        "axios": "^1.4.0",
         "body-parser": "^1.20.0",
-        "cheerio": "^1.0.0-rc.10",
+        "cheerio": "^1.0.0-rc.12",
         "cors": "^2.8.5",
         "dotenv": "^16.0.1",
         "express": "^4.17.2",
         "express-rate-limit": "^6.7.0",
         "fs": "^0.0.1-security",
-        "iconv-lite": "^0.4.24",
+        "iconv-lite": "^0.6.3",
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^6.4.6",
         "morgan": "^1.10.0",
