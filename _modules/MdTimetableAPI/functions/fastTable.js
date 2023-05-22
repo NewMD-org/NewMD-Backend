@@ -32,7 +32,7 @@ export async function fastTable(ID, PWD, timeout) {
                     classname: $(`#F_${x}_${y}${location}subj`).html() || "",
                     teacher: $(`#F_${x}_${y}${location}tea`).html() || "",
                     classID: $(`#F_${x}_${y}${location}tea`).html() ? $(`#F_${x}_${y}${location}tea`).attr("onclick").replace(/view_Week_Sec\('|','TEA'\);/gi, "") : "",
-                    status: $(`#D_${x}_${y}`).html() || "",
+                    status: $(`#D_${x}_${y}`).html() || $(`#T_${x}_${y}`).html() || "",
                 };
             }
         }

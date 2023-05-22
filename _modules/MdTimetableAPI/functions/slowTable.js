@@ -45,7 +45,7 @@ export async function slowTable(ID, PWD, timeout) {
                     classname: $(`#F_${x}_${y}${location}subj`).html() || "",
                     teacher: $(`#F_${x}_${y}${location}tea`).html() || "",
                     classID: classID,
-                    status: $(`#D_${x}_${y}`).html() || "",
+                    status: $(`#D_${x}_${y}`).html() || $(`#T_${x}_${y}`).html() || "",
                     meet: classID ? VTobjList[classID].meet : "",
                     classroom: classID ? VTobjList[classID].classroom : "",
                 };
