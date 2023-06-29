@@ -1,6 +1,6 @@
 {
     "name": "newmd-backend",
-    "version": "1.4.3",
+    "version": "1.4.4",
     "description": "An api for mingdao's potato server.",
     "main": "app.js",
     "engines": {
