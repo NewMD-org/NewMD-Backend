@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status | NewMD Backend</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                fontFamily: {
+                    sans: ["Roboto", "sans-serif"],
+                    body: ["Roboto", "sans-serif"],
+                    mono: ["ui-monospace", "monospace"],
+                },
+            },
+            corePlugins: {
+                preflight: false,
+            },
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container my-24 mx-auto md:px-6">
+        <section class="mb-32 text-center">
+            <h1 class="mb-20 text-4xl font-bold">Information of NewMD main backend</h1>
+
+            <div class="grid lg:grid-cols-3 lg:gap-x-12">
+                <div class="mb-16 lg:mb-0">
+                    <div
+                        class="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+                        <div class="flex justify-center">
+                            <div class="-mt-8 inline-block rounded-full bg-primary-100 p-4 text-primary shadow-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.2" stroke="currentColor" class="w-11 h-11">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h5 class="mb-4 text-3xl font-medium">Service</h5>
+                            <h3 id="service-value"
+                                class="mb-4 text-2xl font-bold text-primary dark:text-primary-400">
+                                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-neutral-100 motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                    role="status">
+                                    <span
+                                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                </div>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-16 lg:mb-0">
+                    <div
+                        class="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+                        <div class="flex justify-center">
+                            <div class="-mt-8 inline-block rounded-full bg-primary-100 p-4 text-primary shadow-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.2" stroke="currentColor" class="w-11 h-11">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h5 class="mb-4 text-3xl font-medium">Uptime</h5>
+                            <h3 id="uptime-value"
+                                class="mb-4 text-2xl font-bold text-primary dark:text-primary-400">
+                                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-neutral-100 motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                    role="status">
+                                    <span
+                                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                </div>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="">
+                    <div
+                        class="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+                        <div class="flex justify-center">
+                            <div id="up-to-date-value"
+                                class="-mt-8 inline-block rounded-full bg-primary-100 p-4 text-primary shadow-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.2" stroke="currentColor" class="w-11 h-11">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h5 class="mb-4 text-3xl font-medium">API version</h5>
+                            <h3 id="api-version-value"
+                                class="mb-4 text-2xl font-bold text-primary dark:text-primary-400 align-middle h-full">
+                                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-neutral-100 motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                    role="status">
+                                    <span
+                                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                </div>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script defer>
+        const serviceValue = document.getElementById("service-value");
+        const uptimeValue = document.getElementById("uptime-value");
+        const apiVersionValue = document.getElementById("api-version-value");
+        const upToDateValue = document.getElementById("up-to-date-value");
+
+
+        const checkIcon = ` 
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke-width="1.2" stroke="currentColor" class="w-11 h-11">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>`;
+        const crossIcon = `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke-width="1.2" stroke="currentColor" class="w-11 h-11">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>`;
+
+        let pingData = {
+            "service": "up",
+            "uptime": "3 seconds",
+            "version": {
+                "current": "1.2.3",
+                "latest": "1.2.3",
+                "upToDate": true
+            }
+        };
+
+        setInterval(async () => {
+            // pingData = await (await fetch("http://localhost:3001/ping")).json();
+            pingData = await (await fetch("https://cloud0.newmd.eu.org/ping")).json();
+            serviceValue.innerText = pingData.service.toUpperCase();
+            uptimeValue.innerText = pingData.uptime.replace(/, /g, " ");
+            apiVersionValue.innerText = pingData.version.current;
+            upToDateValue.innerHTML = pingData.version.upToDate ? checkIcon : crossIcon;
+        }, 1000);
+    </script>
+</body>
+
+</html>
