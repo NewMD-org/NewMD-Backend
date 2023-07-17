@@ -35,10 +35,10 @@ export const login = async (req, res) => {
             {
                 userID: ID,
                 userPWD: PWD,
-                rememberMe: "true"
+                rememberMe: rememberMe === "true"
             },
             process.env.JWT_SECRETKEY,
-            { expiresIn: rememberMe == "true" ? "7 days" : "10 mins" }
+            { expiresIn: rememberMe === "true" ? "7 days" : "10 mins" }
         );
 
         try {
