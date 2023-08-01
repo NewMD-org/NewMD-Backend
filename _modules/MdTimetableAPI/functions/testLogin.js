@@ -4,9 +4,9 @@ import axios from "axios";
 export async function testLogin(ID, PWD, timeout) {
     try {
         try {
-            return mdappMethod(ID, PWD, timeout);
+            return timetableMethod(ID, PWD, 4 * 1000);
         } catch (error) {
-            return timetableMethod(ID, PWD, timeout);
+            return mdappMethod(ID, PWD, timeout);
         }
     }
     catch (error) {
