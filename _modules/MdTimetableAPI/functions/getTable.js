@@ -7,10 +7,12 @@ export async function getTable(ID, PWD, timeout) {
         const account = { ID, PWD };
         try {
             return await ClassArrangementSystemLogin(account, timeout, "http://140.128.156.92/AACourses/Web/wLogin.php");
-        } catch (error) {
+        }
+        catch (error) {
             return await ClassArrangementSystemLogin(account, timeout, "https://s44.mingdao.edu.tw/AACourses/Web/wLogin.php");
         }
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error("fastTable : MD server error");
     }
 }

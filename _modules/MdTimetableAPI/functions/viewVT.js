@@ -32,7 +32,8 @@ export async function viewVT(year, classID, cache, timeout, sleepTime = 1000) {
             else {
                 throw new Error("viewVT : MD server error");
             }
-        } catch (error) {
+        }
+        catch (error) {
             throw new Error(error.message);
         }
     }

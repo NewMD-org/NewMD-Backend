@@ -8,7 +8,8 @@ export default async function CheckVersion() {
         const version = responseObj.version;
 
         return version;
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error(error.message);
     }
 }

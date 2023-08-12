@@ -35,7 +35,8 @@ export default async function deleteUserData(ID, PWD) {
         else {
             throw new Error("Failed to delete user data");
         }
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error(error.message);
     }
 }

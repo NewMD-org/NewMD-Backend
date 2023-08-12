@@ -53,7 +53,8 @@ export default async function userDataInfo() {
             userCount,
             staleData
         };
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
     }
 }

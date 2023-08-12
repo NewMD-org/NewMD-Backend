@@ -55,7 +55,8 @@ export default async function ClassnameSuggestion(original, replacement) {
                 url: repeatedIssue.html_url
             };
         }
-    } catch (error) {
+    }
+    catch (error) {
         return {
             status: 0,
             url: null

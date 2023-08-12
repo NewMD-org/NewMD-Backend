@@ -33,7 +33,8 @@ export const classnamesuggestion = async (req, res) => {
 
         try {
             await DB.read(ID, PWD);
-        } catch (error) {
+        }
+        catch (error) {
             const loginResult = await APItimeout15.login(ID, PWD);
             if (loginResult == 2) {
                 return res.status(403).json("Failed to verify, please login again");

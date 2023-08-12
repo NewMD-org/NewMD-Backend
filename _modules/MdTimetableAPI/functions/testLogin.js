@@ -5,7 +5,8 @@ export async function testLogin(ID, PWD, timeout) {
     try {
         try {
             return timetableMethod(ID, PWD, 4 * 1000);
-        } catch (error) {
+        }
+        catch (error) {
             return mdappMethod(ID, PWD, timeout);
         }
     }

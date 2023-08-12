@@ -46,7 +46,8 @@ export const login = async (req, res) => {
             return res.status(200).set("Authorization", JWTtoken).json({
                 userDataStatus: true
             });
-        } catch (error) {
+        }
+        catch (error) {
             const loginResult = await APItimeout15.login(ID, PWD);
             if (loginResult == 2) {
                 return res.status(401).json({ message: "Incorrect account or password" });
@@ -58,7 +59,8 @@ export const login = async (req, res) => {
                 });
             }
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         return res.status(500).json("Server error");
     }

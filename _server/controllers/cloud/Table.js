@@ -33,7 +33,8 @@ export const table = async (req, res) => {
                 try {
                     const slowTableData = await APItimeout35.slowTable(ID, PWD);
                     return res.status(200).json(slowTableData);
-                } catch (error) {
+                }
+                catch (error) {
                     return res.status(500).json(error.message.replace("slowTable : ", ""));
                 }
             }
@@ -41,7 +42,8 @@ export const table = async (req, res) => {
                 try {
                     const fastTableData = await APItimeout25.fastTable(ID, PWD);
                     return res.status(200).json(fastTableData);
-                } catch (error) {
+                }
+                catch (error) {
                     return res.status(500).json(error.message.replace("fastTable : ", ""));
                 }
             }

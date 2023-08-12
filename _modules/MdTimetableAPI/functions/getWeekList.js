@@ -20,7 +20,8 @@ export async function getWeekList(year, timeout) {
             const $ = load(response.data);
             if (!$("body").text().includes("|")) {
                 throw new Error("Week list not found");
-            } else {
+            }
+            else {
                 const listObj = {};
                 const listArr = $("body").text().replace(/\|第.*?週 :/g, "").split(",").map(ele => [ele.split(" ")[0], ele.split(" ")[1]]);
                 for (const key of listArr) {
