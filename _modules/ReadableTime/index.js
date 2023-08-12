@@ -49,12 +49,12 @@ export default function ReadableTime(milliseconds) {
             second
         },
         string: [
-            (year ? `${year} years` : null),
-            (month ? `${month} months` : null),
-            (day ? `${day} days` : null),
-            (hour ? `${hour} hours` : null),
-            (minute ? `${minute} minute` : null),
-            (second ? `${second} seconds` : null)
-        ].filter(ele => ele).join(", ")
+            year && `${year} ${year === 1 ? "year" : "years"}`,
+            month && `${month} ${month === 1 ? "month" : "months"}`,
+            day && `${day} ${day === 1 ? "day" : "days"}`,
+            hour && `${hour} ${hour === 1 ? "hour" : "hours"}`,
+            minute && `${minute} ${minute === 1 ? "minute" : "minutes"}`,
+            second && `${second} ${second === 1 ? "second" : "seconds"}`
+        ].filter(Boolean).join(", ")
     };
 }

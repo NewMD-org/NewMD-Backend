@@ -8,10 +8,13 @@
     },
     "type": "module",
     "scripts": {
-        "dev": "node --trace-warnings ./app.js",
+        "dev": "nodemon --trace-warnings ./app.js",
         "start": "node ./app.js",
         "lint": " npx eslint ./",
-        "fixlint": " npx eslint ./ --fix"
+        "check-and-fix-lint": "(echo '\n---\n\nScanning for lint error...' && eslint .) || (echo '\n\n---\n\nFound lint error, working on it...' && eslint . --fix) || echo \"\n\nWARNING: There are some error that can't be fixed automatically!\"",
+        "lintfix": "npm run --silent check-and-fix-lint",
+        "jest-test":"cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 npx jest",
+        "test": "npm run --silent jest-test"
     },
     "author": "AAAA",
     "license": "MIT",
@@ -32,6 +35,7 @@
         "node-schedule": "^2.1.0"
     },
     "devDependencies": {
-        "eslint": "^8.30.0"
+        "eslint": "^8.30.0",
+        "nodemon": "^3.0.1"
     }
 }
