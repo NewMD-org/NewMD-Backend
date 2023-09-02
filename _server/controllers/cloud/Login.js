@@ -1,25 +1,25 @@
 import jwt from "jsonwebtoken";
 import MdTimetableAPI from "../../../_modules/MdTimetableAPI/index.js";
 import MongoDB from "../../../_modules/MongoDB/index.js";
+import CheckRequestRequirement from "../../../_modules/CheckRequestRequirement/index.js";
 
 
 const DB = new MongoDB();
 const APItimeout15 = new MdTimetableAPI(15);
 
 export const login = async (req, res) => {
-    const RequiredBody = ["ID", "PWD", "rememberMe"];
-    const hasAllRequiredBody = RequiredBody.every(item => Object.keys(req.body).includes(item));
-    if (!hasAllRequiredBody || Object.keys(req.body).length < RequiredBody.length) {
-        return res.status(400).json(`The following items are all required for this route : [${RequiredBody.join(", ")}]`);
+    try {
+        new CheckRequestRequirement(req, res).hasBody(["ID", "PWD", "rememberMe"]);
     }
-    else if (Object.keys(req.body).length > RequiredBody.length) {
-        return res.status(400).json(`Only allowed ${RequiredBody.length} items in the body : [${RequiredBody.join(", ")}]`);
+    catch (error) {
+        return res.status(400).json({ message: error.message });
     }
-    else if (req.body.ID == "") {
-        return res.status(400).json("Missing Username");
+
+    if (req.body.ID == "") {
+        return res.status(400).json({ message: "Missing Username" });
     }
     else if (req.body.PWD == "") {
-        return res.status(400).json("Missing Password");
+        return res.status(400).json({ message: "Missing Password" });
     }
 
     const ID = req.body.ID;
@@ -46,7 +46,8 @@ export const login = async (req, res) => {
             return res.status(200).set("Authorization", JWTtoken).json({
                 userDataStatus: true
             });
-        } catch (error) {
+        }
+        catch (error) {
             const loginResult = await APItimeout15.login(ID, PWD);
             if (loginResult == 2) {
                 return res.status(401).json({ message: "Incorrect account or password" });
@@ -58,8 +59,9 @@ export const login = async (req, res) => {
                 });
             }
         }
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json("Server error");
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Server error" });
     }
 };

@@ -1,16 +1,15 @@
 import MdTimetableAPI from "../../../_modules/MdTimetableAPI/index.js";
+import CheckRequestRequirement from "../../../_modules/CheckRequestRequirement/index.js";
 
 
 const APItimeout5 = new MdTimetableAPI(5);
 
 export const getweeklist = async (req, res) => {
-    const RequiredQuery = ["year"];
-    const hasAllRequiredQuery = RequiredQuery.every(item => Object.keys(req.query).includes(item));
-    if (!hasAllRequiredQuery || Object.keys(req.query).length < RequiredQuery.length) {
-        return res.status(400).send(`The following items are all required for this route : [${RequiredQuery.join(", ")}]`);
+    try {
+        new CheckRequestRequirement(req, res).hasQuery(["year"]);
     }
-    else if (Object.keys(req.query).length > RequiredQuery.length) {
-        return res.status(400).send(`Only allowed ${RequiredQuery.length} items in the body : [${RequiredQuery.join(", ")}]`);
+    catch (error) {
+        return res.status(400).json({ message: error.message });
     }
 
     const year = req.query.year;

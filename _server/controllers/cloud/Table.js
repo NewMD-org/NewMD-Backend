@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import CheckRequestRequirement from "../../../_modules/CheckRequestRequirement/index.js";
 import MdTimetableAPI from "../../../_modules/MdTimetableAPI/index.js";
 
 
@@ -6,18 +7,16 @@ const APItimeout25 = new MdTimetableAPI(25);
 const APItimeout35 = new MdTimetableAPI(35);
 
 export const table = async (req, res) => {
-    const RequiredQuery = ["meetURL"];
-    const hasAllRequiredQuery = RequiredQuery.every(item => Object.keys(req.query).includes(item));
-    if (!hasAllRequiredQuery || Object.keys(req.query).length < RequiredQuery.length) {
-        return res.status(400).send(`The following items are all required for this route : [${RequiredQuery.join(", ")}]`);
+    try {
+        new CheckRequestRequirement(req, res).hasQuery(["meetURL"]);
     }
-    else if (Object.keys(req.query).length > RequiredQuery.length) {
-        return res.status(400).send(`Only allowed ${RequiredQuery.length} items in the body : [${RequiredQuery.join(", ")}]`);
+    catch (error) {
+        return res.status(400).json({ message: error.message });
     }
 
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        return res.status(400).json("Please insert auth header");
+        return res.status(400).json({ message: "Please insert auth header" });
     }
 
     const meetURL = req.query.meetURL;
@@ -33,24 +32,26 @@ export const table = async (req, res) => {
                 try {
                     const slowTableData = await APItimeout35.slowTable(ID, PWD);
                     return res.status(200).json(slowTableData);
-                } catch (error) {
-                    return res.status(500).json(error.message.replace("slowTable : ", ""));
+                }
+                catch (error) {
+                    return res.status(500).json({ message: error.message.replace("slowTable : ", "") });
                 }
             }
             case "false": {
                 try {
                     const fastTableData = await APItimeout25.fastTable(ID, PWD);
                     return res.status(200).json(fastTableData);
-                } catch (error) {
-                    return res.status(500).json(error.message.replace("fastTable : ", ""));
+                }
+                catch (error) {
+                    return res.status(500).json({ message: error.message.replace("fastTable : ", "") });
                 }
             }
             default: {
-                return res.status(400).send("meetURL must be boolean");
+                return res.status(400).json({ message: "meetURL must be boolean" });
             }
         }
     }
     catch (error) {
-        return res.status(403).json("Failed to verify, please login again");
+        return res.status(403).json({ message: "Failed to verify, please login again" });
     }
 };

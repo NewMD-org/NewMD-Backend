@@ -8,6 +8,7 @@ import { viewvt } from "../controllers/cloud/ViewVT.js";
 import { getweeklist } from "../controllers/cloud/GetWeekList.js";
 import { ping } from "../controllers/cloud/Ping.js";
 import { status } from "../controllers/cloud/Status.js";
+import { classnamesuggestion } from "../controllers/cloud/ClassnameSuggestion.js";
 
 
 const router = express.Router();
@@ -39,7 +40,11 @@ router.get("/viewvt", viewvt);
 router.use("/database/:action?", limiter_1m_20req);
 router.get("/database/:action?", database);
 
+router.use("/database/:action?", limiter_1m_20req);
 router.get("/getweeklist", getweeklist);
+
+router.use("/classnamesuggestion", limiter_1m_10req);
+router.post("/classnamesuggestion", classnamesuggestion);
 
 router.get("/*", (_, res) => {
     res.status(200).json("Please insert correct path");
