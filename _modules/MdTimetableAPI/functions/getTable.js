@@ -3,17 +3,25 @@ import iconv from "iconv-lite";
 
 
 export async function getTable(ID, PWD, timeout) {
+    const urls = [
+        "https://s44.mingdao.edu.tw/AACourses/Web/wLogin.php",
+        "http://140.128.156.92/AACourses/Web/wLogin.php"
+    ];
+
     try {
         const account = { ID, PWD };
-        try {
-            return await ClassArrangementSystemLogin(account, timeout, "http://140.128.156.92/AACourses/Web/wLogin.php");
+        for (const url of urls) {
+            try {
+                return await ClassArrangementSystemLogin(account, timeout, url);
+            }
+            catch (error) {
+                console.log(`Failed to get table using URL: ${url}`);
+            }
         }
-        catch (error) {
-            return await ClassArrangementSystemLogin(account, timeout, "https://s44.mingdao.edu.tw/AACourses/Web/wLogin.php");
-        }
+        throw new Error("fastTable: All URLs failed");
     }
     catch (error) {
-        throw new Error("fastTable : MD server error");
+        throw new Error("fastTable: MD server error");
     }
 }
 
