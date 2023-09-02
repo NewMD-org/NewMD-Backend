@@ -1,5 +1,6 @@
 import axios from "axios";
 import { load } from "cheerio";
+import https from "https";
 
 
 function sleep(ms) {
@@ -15,9 +16,12 @@ export async function viewVT(year, classID, cache, timeout, sleepTime = 1000) {
     else {
         try {
             const response = await axios.get(
-                `http://140.128.156.92/AACourses/Web/qVT.php?F_sPeriodsem=${year}&eID=${classID}`,
+                `https://140.128.156.164/AACourses/Web/qVT.php?F_sPeriodsem=${year}&eID=${classID}`,
                 {
-                    timeout: (timeout ?? 20 * 1000)
+                    timeout: (timeout ?? 20 * 1000),
+                    httpsAgent: new https.Agent({
+                        rejectUnauthorized: false
+                    })
                 }
             );
             if (response.status === 200) {
@@ -34,7 +38,7 @@ export async function viewVT(year, classID, cache, timeout, sleepTime = 1000) {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            throw new Error("viewVT : MD server error");
         }
     }
 }
