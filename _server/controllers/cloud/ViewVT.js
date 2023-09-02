@@ -1,16 +1,15 @@
 import MdTimetableAPI from "../../../_modules/MdTimetableAPI/index.js";
+import CheckRequestRequirement from "../../../_modules/CheckRequestRequirement/index.js";
 
 
 const APItimeout10 = new MdTimetableAPI(10);
 
 export const viewvt = async (req, res) => {
-    const RequiredQuery = ["year", "classID"];
-    const hasAllRequiredQuery = RequiredQuery.every(item => Object.keys(req.query).includes(item));
-    if (!hasAllRequiredQuery || Object.keys(req.query).length < RequiredQuery.length) {
-        return res.status(400).send(`The following items are all required for this route : [${RequiredQuery.join(", ")}]`);
+    try {
+        new CheckRequestRequirement(req, res).hasQuery(["year", "classID"]);
     }
-    else if (Object.keys(req.query).length > RequiredQuery.length) {
-        return res.status(400).send(`Only allowed ${RequiredQuery.length} items in the body : [${RequiredQuery.join(", ")}]`);
+    catch (error) {
+        return res.status(400).json({ message: error.message });
     }
 
     const year = req.query.year;
@@ -20,6 +19,6 @@ export const viewvt = async (req, res) => {
         return res.status(200).json(await APItimeout10.viewVT(year, classID, 0));
     }
     catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: "MD server error" });
     }
 };

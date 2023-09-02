@@ -2,24 +2,23 @@ import jwt from "jsonwebtoken";
 import MongoDB from "../../../_modules/MongoDB/index.js";
 import MdTimetableAPI from "../../../_modules/MdTimetableAPI/index.js";
 import ClassnameSuggestion from "../../../_modules/ClassnameSuggestion/index.js";
+import CheckRequestRequirement from "../../../_modules/CheckRequestRequirement/index.js";
 
 
 const DB = new MongoDB();
 const APItimeout15 = new MdTimetableAPI(15);
 
 export const classnamesuggestion = async (req, res) => {
-    const RequiredBody = ["original", "replacement"];
-    const hasAllRequiredBody = RequiredBody.every(item => Object.keys(req.body).includes(item));
-    if (!hasAllRequiredBody || Object.keys(req.body).length < RequiredBody.length) {
-        return res.status(400).json(`The following items are all required for this route : [${RequiredBody.join(", ")}]`);
+    try {
+        new CheckRequestRequirement(req, res).hasBody(["original", "replacement"]);
     }
-    else if (Object.keys(req.body).length > RequiredBody.length) {
-        return res.status(400).json(`Only allowed ${RequiredBody.length} items in the body : [${RequiredBody.join(", ")}]`);
+    catch (error) {
+        return res.status(400).json({ message: error.message });
     }
 
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        return res.status(400).json("Please insert auth header");
+        return res.status(400).json({ message: "Please insert auth header" });
     }
 
     const original = req.body.original;
@@ -37,7 +36,7 @@ export const classnamesuggestion = async (req, res) => {
         catch (error) {
             const loginResult = await APItimeout15.login(ID, PWD);
             if (loginResult == 2) {
-                return res.status(403).json("Failed to verify, please login again");
+                return res.status(403).json({ message: "Failed to verify, please login again" });
             }
         }
 
@@ -53,6 +52,6 @@ export const classnamesuggestion = async (req, res) => {
         }
     }
     catch (error) {
-        return res.status(403).json("Failed to verify, please login again");
+        return res.status(403).json({ message: "Failed to verify, please login again" });
     }
 };
