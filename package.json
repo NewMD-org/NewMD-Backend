@@ -1,6 +1,6 @@
 {
     "name": "newmd-backend",
-    "version": "1.7.4",
+    "version": "1.9.0",
     "description": "An api for mingdao's potato server.",
     "main": "app.js",
     "engines": {
@@ -8,12 +8,12 @@
     },
     "type": "module",
     "scripts": {
-        "dev": "nodemon --trace-warnings ./app.js",
-        "start": "node ./app.js",
+        "dev": "bun -v && bun ./app.js || nodemon -v && nodemon --trace-warnings ./app.js || node -v && node --trace-warnings ./app.js",
+        "start": "pm2 start ./app.js --name newmd-backend --attach || pm2 restart newmd-backend --update-env --attach",
         "lint": " npx eslint ./",
         "check-and-fix-lint": "(echo '\n---\n\nScanning for lint error...' && eslint .) || (echo '\n\n---\n\nFound lint error, working on it...' && eslint . --fix) || echo \"\n\nWARNING: There are some error that can't be fixed automatically!\"",
         "lintfix": "npm run --silent check-and-fix-lint",
-        "jest-test":"cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 npx jest",
+        "jest-test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 npx jest",
         "test": "npm run --silent jest-test"
     },
     "author": "AAAA",
@@ -32,7 +32,8 @@
         "mongoose": "^6.11.3",
         "morgan": "^1.10.0",
         "node-fetch": "^2.6.7",
-        "node-schedule": "^2.1.0"
+        "node-schedule": "^2.1.0",
+        "pm2": "^5.3.0"
     },
     "devDependencies": {
         "eslint": "^8.30.0",
