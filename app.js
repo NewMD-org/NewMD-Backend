@@ -18,7 +18,7 @@ try {
     let app = server.listen(server.get("port"), server.get("host"), err => {
         if (err) throw err;
         console.log(`Server : listening on ${host}:${app.address().port}`);
-        new MongoDB().scheduleUpdate("00 00 00 * * *");
+        new MongoDB().scheduleUpdate("00 00 20 * * *");
     });
 }
 catch (error) {
