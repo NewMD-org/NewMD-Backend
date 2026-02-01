@@ -36,7 +36,7 @@
         "pm2": "^5.3.0"
     },
     "devDependencies": {
-        "eslint": "^8.30.0",
+        "eslint": "^9.26.0",
         "nodemon": "^3.0.1"
     }
 }
